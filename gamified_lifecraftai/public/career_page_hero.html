@@ -17,7 +17,7 @@
     
     :root {
       --primary: #00c6ff;
-      --secondary: #0072ff;
+      --secondary: #ff6a00;
       --dark: #0c0e1a;
       --darker: #080a14;
       --card-bg: rgba(20, 25, 45, 0.7);
@@ -811,11 +811,41 @@
     });
 
     // Contact form
-    document.getElementById('contactForm').addEventListener('submit', e => {
-      e.preventDefault();
-      alert('Thank you! We’ll get back to you soon.');
-      e.target.reset();
+    // document.getElementById('contactForm').addEventListener('submit', e => {
+    //   e.preventDefault();
+    //   alert('Thank you! We’ll get back to you soon.');
+    //   e.target.reset();
+    // });
+
+    document.getElementById("contactForm").addEventListener("submit", async (e) => {
+  e.preventDefault();
+
+  const name = document.getElementById("name").value;
+  const email = document.getElementById("email").value;
+  const subject = document.getElementById("subject").value;
+  const message = document.getElementById("message").value;
+
+  try {
+    const res = await fetch("http://localhost:5000/api/submit-query", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ name, email, subject, message })
     });
+
+    const data = await res.json();
+
+    if (data.success) {
+      alert("Thank you! Your query has been submitted.");
+      e.target.reset();
+    } else {
+      alert("Error: " + data.message);
+    }
+
+  } catch (err) {
+    alert("Server error. Please try again.");
+    console.error(err);
+  }
+});
 
     // Particle background
     const canvas = document.getElementById("bg");

@@ -1,12 +1,14 @@
 // server.js — Express backend for AI suggestions + Multilingual Personal Assistant
 require('dotenv').config();
 const express = require('express');
-const bodyParser = require('body-parser');
+// const bodyParser = require('body-parser');
 const cors = require('cors');
 const https = require('https');
 const rateLimit = require('express-rate-limit');
-
+const mongoose = require("mongoose");
+const queryRoutes = require("./routes/queryRoutes");
 const app = express();
+
 
 // 🔐 Validate Gemini API key
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
@@ -40,7 +42,11 @@ const corsOptions = {
 };
 
 app.use(cors(corsOptions));
-app.use(bodyParser.json({ limit: '10mb' }));
+// app.use(express.json());
+// app.use(bodyParser.json({ limit: '10mb' }));
+app.use(express.json({ limit: "10mb" }));
+app.use(express.urlencoded({ extended: true }));
+
 
 // 🛡 Rate limiter
 const apiLimiter = rateLimit({
@@ -50,6 +56,14 @@ const apiLimiter = rateLimit({
   standardHeaders: true,
   legacyHeaders: false,
 });
+console.log("Loaded MONGO_URI:", process.env.MONGO_URI);
+
+mongoose
+  .connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
+  .then(() => console.log("✅ MongoDB Atlas Connected Successfully"))
+  .catch((err) => console.error("❌ MongoDB Connection Error:", err));
+
+app.use("/api", queryRoutes);  
 
 // ================================
 // 🌐 IMPROVED Language Detection

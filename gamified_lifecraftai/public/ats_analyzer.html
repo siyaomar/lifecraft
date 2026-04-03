@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>ATS Analyzer — LifeCraft</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js" defer></script>
+  <style>
+    :root{--bg:#060912;--bg2:#0b1020;--s1:#0f1828;--s2:#162034;--s3:#1d2a40;--b1:rgba(255,255,255,0.06);--b2:rgba(255,255,255,0.11);--b3:rgba(255,255,255,0.2);--t1:#e8f0ff;--t2:#8da4c8;--t3:#4e6280;--blue:#4080ff;--blue2:#7aaeff;--violet:#7c5cf8;--cyan:#22d4ee;--amber:#f59e0b;--rose:#f43f5e;--green:#10b981;--ga:linear-gradient(135deg,#4080ff,#7c5cf8);--font-d:'Syne',sans-serif;--font-b:'DM Sans',sans-serif;--r:12px;--r2:18px;--r3:24px;}
+    *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+    body{font-family:var(--font-b);background:var(--bg);color:var(--t1);min-height:100vh;overflow-x:hidden;}
+    body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;background:radial-gradient(ellipse 900px 700px at 15% 5%,rgba(64,128,255,0.07) 0%,transparent 55%),radial-gradient(ellipse 700px 500px at 85% 85%,rgba(124,92,248,0.07) 0%,transparent 55%);}
+    nav{position:sticky;top:0;z-index:999;display:flex;align-items:center;justify-content:space-between;padding:0 2.5rem;height:66px;background:rgba(6,9,18,0.88);backdrop-filter:blur(28px);border-bottom:1px solid var(--b1);}
+    nav::after{content:'';position:absolute;bottom:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(64,128,255,.4) 40%,rgba(124,92,248,.4) 60%,transparent);}
+    .logo{font-family:var(--font-d);font-size:1.5rem;font-weight:800;background:var(--ga);-webkit-background-clip:text;-webkit-text-fill-color:transparent;display:flex;align-items:center;gap:10px;text-decoration:none;}
+    .logo-pulse{width:9px;height:9px;border-radius:50%;background:var(--ga);animation:lpulse 2.4s ease-in-out infinite;}
+    @keyframes lpulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.6)}}
+    .nav-links{display:flex;gap:4px;}
+    .nav-btn{display:flex;align-items:center;gap:7px;padding:8px 16px;border-radius:var(--r);background:none;border:none;cursor:pointer;color:var(--t3);font-family:var(--font-b);font-size:.82rem;font-weight:500;transition:all .18s;text-decoration:none;white-space:nowrap;}
+    .nav-btn:hover{color:var(--t1);background:var(--b1);}
+    .nav-btn.active{color:var(--blue2);background:rgba(64,128,255,.1);border:1px solid rgba(64,128,255,.18);}
+    .nav-btn i{font-size:.75rem;}
+    .page{position:relative;z-index:1;}
+    .inner{max-width:1200px;margin:0 auto;padding:2rem 2rem 4rem;}
+    .pg-eyebrow{font-size:.73rem;font-weight:800;text-transform:uppercase;letter-spacing:.12em;color:var(--blue2);margin-bottom:.4rem;}
+    .pg-title{font-family:var(--font-d);font-size:1.8rem;font-weight:800;letter-spacing:-0.025em;margin-bottom:.3rem;}
+    .pg-title span{background:linear-gradient(135deg,#22d4ee,#4080ff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+    .pg-sub{color:var(--t2);font-size:.88rem;margin-bottom:1.75rem;}
+    .grid2{display:grid;grid-template-columns:1fr 1fr;gap:1.25rem;}
+    .card{background:var(--s1);border:1px solid var(--b1);border-radius:var(--r2);padding:1.5rem;box-shadow:0 4px 24px rgba(0,0,0,.45);}
+    .card+.card{margin-top:1.1rem;}
+    .card-title{font-family:var(--font-d);font-size:.9rem;font-weight:700;margin-bottom:1rem;color:var(--t2);}
+    textarea,select,input{width:100%;padding:10px 13px;background:var(--s2);border:1px solid var(--b2);border-radius:var(--r);color:var(--t1);font-family:var(--font-b);font-size:.855rem;outline:none;transition:border-color .2s;}
+    textarea:focus,select:focus,input:focus{border-color:var(--blue);}
+    select option{background:var(--s2);}
+    textarea{resize:vertical;min-height:145px;font-size:.8rem;}
+    .btn-row{display:flex;gap:8px;margin-top:.85rem;flex-wrap:wrap;align-items:center;}
+    .btn-p{display:inline-flex;align-items:center;gap:7px;padding:9px 18px;border-radius:var(--r);background:var(--ga);color:#fff;font-family:var(--font-b);font-size:.8rem;font-weight:700;border:none;cursor:pointer;box-shadow:0 4px 16px rgba(64,128,255,.3);transition:all .2s;}
+    .btn-p:hover{transform:translateY(-1px);}
+    .btn-g{display:inline-flex;align-items:center;gap:7px;padding:9px 18px;border-radius:var(--r);background:var(--s2);color:var(--t1);border:1px solid var(--b2);font-family:var(--font-b);font-size:.8rem;font-weight:600;cursor:pointer;transition:all .2s;}
+    .btn-g:hover{background:var(--s3);}
+    /* Score ring */
+    .ring-wrap{display:flex;justify-content:center;margin:1rem 0 .5rem;}
+    .ring-box{width:148px;height:148px;position:relative;}
+    .ring-box svg{transform:rotate(-90deg);}
+    .ring-center{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;}
+    .ring-num{font-family:var(--font-d);font-size:2.3rem;font-weight:800;background:var(--ga);-webkit-background-clip:text;-webkit-text-fill-color:transparent;line-height:1;}
+    .ring-lbl{font-size:.68rem;color:var(--t3);font-weight:700;text-transform:uppercase;letter-spacing:.06em;}
+    /* Metric rows */
+    .m-row{display:flex;align-items:center;gap:10px;margin-bottom:10px;}
+    .m-label{width:118px;font-size:.78rem;color:var(--t2);flex-shrink:0;}
+    .pbar-wrap{flex:1;background:var(--s3);border-radius:20px;height:7px;overflow:hidden;}
+    .pbar{height:100%;border-radius:20px;transition:width 1.3s cubic-bezier(.2,1,.3,1);}
+    .m-val{font-size:.78rem;font-weight:800;width:34px;text-align:right;flex-shrink:0;}
+    /* Issues */
+    .issue-item{display:flex;gap:10px;padding:10px 0;border-bottom:1px solid var(--b1);}
+    .issue-item:last-child{border:none;}
+    .issue-i{font-size:.85rem;margin-top:2px;flex-shrink:0;}
+    .issue-text h4{font-size:.84rem;font-weight:700;}
+    .issue-text p{color:var(--t3);font-size:.78rem;margin-top:2px;line-height:1.5;}
+    /* Suggestions */
+    .sugg{padding:11px 14px;border-radius:var(--r);margin-bottom:7px;border-left:3px solid var(--blue);background:var(--s2);font-size:.83rem;}
+    .sugg.w{border-color:var(--amber);}
+    .sugg.g{border-color:var(--green);}
+    .sugg strong{display:block;margin-bottom:3px;}
+    .sugg p{color:var(--t3);font-size:.78rem;line-height:1.5;}
+    /* Keywords */
+    .kw{display:inline-block;padding:3px 9px;border-radius:10px;font-size:.72rem;font-weight:700;margin:3px;}
+    .kw-y{background:rgba(16,185,129,.12);color:var(--green);}
+    .kw-n{background:rgba(244,63,94,.12);color:var(--rose);}
+    @media(max-width:900px){.grid2{grid-template-columns:1fr;}}
+    @media(max-width:600px){nav{padding:0 1rem;}.nav-btn span{display:none;}.inner{padding:1.25rem 1rem 3rem;}}
+  </style>
+</head>
+<body>
+<nav>
+  <a class="logo" href="career_page_hero.html"><div class="logo-pulse"></div>LifeCraft</a>
+  <div class="nav-links">
+    <a class="nav-btn" href="career_page_hero.html"><i class="fas fa-house"></i><span>Home</span></a>
+    <a class="nav-btn" href="resume_builder.html"><i class="fas fa-file-alt"></i><span>Builder</span></a>
+    <a class="nav-btn active" href="ats_analyzer.html"><i class="fas fa-chart-bar"></i><span>ATS</span></a>
+    <a class="nav-btn" href="skill_gap.html"><i class="fas fa-brain"></i><span>Skills</span></a>
+    <a class="nav-btn" href="interview_prep.html"><i class="fas fa-comments"></i><span>Interview</span></a>
+    <a class="nav-btn" href="career_guidance.html"><i class="fas fa-map"></i><span>Roadmap</span></a>
+    <a class="nav-btn" href="connect.html"><i class="fas fa-envelope"></i><span>Connect</span></a>
+  </div>
+</nav>
+<div class="page"><div class="inner">
+  <div class="pg-eyebrow">Step 02</div>
+  <div class="pg-title">ATS Resume <span>Analyzer</span></div>
+  <div class="pg-sub">Paste your resume text and select a target role — get an instant compatibility score across 5 dimensions.</div>
+  <div class="grid2">
+    <div>
+      <div class="card">
+        <div class="card-title">Resume Input</div>
+        <textarea id="ats-txt" placeholder="Paste resume text here…">Jane Doe | Full-Stack Engineer | Bengaluru
+jane@example.com | +91 98765 43210
+
+SUMMARY
+Passionate full-stack engineer with 3+ years building scalable web apps. Skilled in React, Node.js, and cloud platforms.
+
+EXPERIENCE
+Senior Software Developer — Tech Solutions Ltd. | Jan 2022 – Present
+• Led migration to React/Node.js microservices
+• Reduced page load time by 60%
+• Mentored 3 junior developers
+
+SKILLS
+JavaScript, React, Node.js, MongoDB, AWS, Docker, Git, Python, REST APIs
+
+EDUCATION
+B.Tech Computer Science — VIT University | 2018–2022 | CGPA: 8.6
+
+CERTIFICATIONS
+AWS Certified Solutions Architect, 2023</textarea>
+        <div class="btn-row">
+          <button class="btn-p" onclick="runATS()"><i class="fas fa-search"></i> Analyze</button>
+          <select id="ats-role" style="max-width:170px;padding:9px 12px;">
+            <option value="web">Web Developer</option>
+            <option value="data">Data Scientist</option>
+            <option value="cloud">Cloud Engineer</option>
+            <option value="ai">AI/ML Engineer</option>
+            <option value="security">Cybersecurity</option>
+          </select>
+        </div>
+      </div>
+      <div class="card" id="score-card" style="display:none;">
+        <div class="card-title" style="text-align:center;">ATS Compatibility Score</div>
+        <div class="ring-wrap">
+          <div class="ring-box">
+            <svg width="148" height="148" viewBox="0 0 148 148">
+              <circle cx="74" cy="74" r="62" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="10"/>
+              <circle id="s-circle" cx="74" cy="74" r="62" fill="none" stroke="url(#rg)" stroke-width="10" stroke-linecap="round" stroke-dasharray="390" stroke-dashoffset="390" style="transition:stroke-dashoffset 1.5s cubic-bezier(.2,1,.3,1);"/>
+              <defs><linearGradient id="rg" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#4080ff"/><stop offset="100%" stop-color="#7c5cf8"/></linearGradient></defs>
+            </svg>
+            <div class="ring-center"><span class="ring-num" id="s-num">0</span><span class="ring-lbl">/ 100</span></div>
+          </div>
+        </div>
+        <div id="ats-metrics"></div>
+      </div>
+      <div class="card" id="kw-card" style="display:none;">
+        <div class="card-title">Keyword Analysis</div>
+        <p style="font-size:.78rem;color:var(--green);margin-bottom:4px;font-weight:700;">✓ Found in resume</p>
+        <div id="kw-found"></div>
+        <p style="font-size:.78rem;color:var(--rose);margin:10px 0 4px;font-weight:700;">✗ Missing keywords</p>
+        <div id="kw-miss"></div>
+      </div>
+    </div>
+    <div>
+      <div class="card" id="issues-card" style="display:none;">
+        <div class="card-title">Issues Detected</div>
+        <div id="ats-issues"></div>
+      </div>
+      <div class="card" id="sugg-card" style="display:none;">
+        <div class="card-title">Improvement Suggestions</div>
+        <div id="ats-sugg"></div>
+      </div>
+      <div class="card" id="chart-card" style="display:none;">
+        <div class="card-title">Score Breakdown</div>
+        <div style="position:relative;height:215px;"><canvas id="atsChart"></canvas></div>
+      </div>
+    </div>
+  </div>
+</div></div>
+<script>
+const roleKW={
+  web:['javascript','react','node.js','html','css','rest api','git','mongodb','typescript','docker','agile','responsive'],
+  data:['python','pandas','numpy','scikit-learn','sql','tableau','machine learning','statistics','spark','tensorflow'],
+  cloud:['aws','azure','gcp','terraform','kubernetes','docker','ci/cd','iam','lambda','devops','cloudformation'],
+  ai:['python','pytorch','tensorflow','deep learning','nlp','computer vision','transformers','mlops','hugging face','llm'],
+  security:['penetration testing','siem','firewalls','incident response','compliance','encryption','risk assessment','owasp','nist']
+};
+let chartInst=null;
+function runATS(){
+  const txt=document.getElementById('ats-txt').value.toLowerCase();
+  const role=document.getElementById('ats-role').value;
+  const kws=roleKW[role]||roleKW.web;
+  const found=kws.filter(k=>txt.includes(k));
+  const missing=kws.filter(k=>!txt.includes(k));
+  const kwS=Math.round((found.length/kws.length)*100);
+  const hasSum=txt.includes('summary')||txt.includes('objective');
+  const hasExp=txt.includes('experience')||txt.includes('worked');
+  const hasEdu=txt.includes('education')||txt.includes('university')||txt.includes('degree')||txt.includes('b.tech');
+  const hasSkills=txt.includes('skills');
+  const strS=Math.round(([hasSum,hasExp,hasEdu,hasSkills].filter(Boolean).length/4)*100);
+  const wc=txt.split(/\s+/).length;
+  const readS=wc>150&&wc<800?90:wc<100?50:75;
+  const hasBullets=txt.includes('•')||txt.includes('led')||txt.includes('built')||txt.includes('developed')||txt.includes('reduced');
+  const weak=txt.includes('responsible for')||txt.includes('helped with')||txt.includes('assisted');
+  const contS=hasBullets?(weak?65:88):45;
+  const skillS=Math.min(100,kwS+15);
+  const total=Math.round(kwS*.3+strS*.2+readS*.15+contS*.2+skillS*.15);
+  ['score-card','kw-card','issues-card','sugg-card','chart-card'].forEach(id=>document.getElementById(id).style.display='block');
+  setTimeout(()=>{
+    document.getElementById('s-circle').style.strokeDashoffset=390-(390*(total/100));
+    document.getElementById('s-num').textContent=total;
+  },80);
+  const metrics=[{l:'Keyword Match',v:kwS,c:'#4080ff'},{l:'Structure',v:strS,c:'#22d4ee'},{l:'Readability',v:readS,c:'#10b981'},{l:'Content Quality',v:contS,c:'#f59e0b'},{l:'Skill Alignment',v:skillS,c:'#a78bfa'}];
+  document.getElementById('ats-metrics').innerHTML=metrics.map(m=>`<div class="m-row"><span class="m-label">${m.l}</span><div class="pbar-wrap"><div class="pbar" style="width:${m.v}%;background:${m.c};"></div></div><span class="m-val" style="color:${m.c}">${m.v}%</span></div>`).join('');
+  document.getElementById('kw-found').innerHTML=found.map(k=>`<span class="kw kw-y">${k}</span>`).join('');
+  document.getElementById('kw-miss').innerHTML=missing.map(k=>`<span class="kw kw-n">${k}</span>`).join('');
+  const issues=[];
+  if(!hasSum)issues.push({i:'fa-exclamation-triangle',c:'var(--rose)',h:'Missing Summary Section',d:'A professional summary is critical for ATS and recruiter first impressions.'});
+  if(weak)issues.push({i:'fa-exclamation-circle',c:'var(--amber)',h:'Weak Bullet Points Detected',d:'"Responsible for" is passive. Use action verbs: Led, Built, Reduced, Delivered.'});
+  if(kwS<50)issues.push({i:'fa-times-circle',c:'var(--rose)',h:`Low Keyword Coverage (${kwS}%)`,d:'Add more terms from the specific job description you\'re targeting.'});
+  if(wc<200)issues.push({i:'fa-info-circle',c:'var(--amber)',h:'Resume May Be Too Short',d:'ATS expects 400–700 words for 2–3 years of experience.'});
+  if(!hasBullets)issues.push({i:'fa-lightbulb',c:'var(--blue2)',h:'Quantify Your Achievements',d:'"Reduced load time by 60%" or "Served 10K+ users" beats vague descriptions.'});
+  if(!issues.length)issues.push({i:'fa-check-circle',c:'var(--green)',h:'Structure Looks Great!',d:'Your resume has all key sections ATS systems expect.'});
+  document.getElementById('ats-issues').innerHTML=issues.map(i=>`<div class="issue-item"><i class="fas ${i.i} issue-i" style="color:${i.c}"></i><div class="issue-text"><h4>${i.h}</h4><p>${i.d}</p></div></div>`).join('');
+  document.getElementById('ats-sugg').innerHTML=[
+    {c:'',t:'Use strong action verbs',d:'Start every bullet with Led, Built, Designed, Delivered, Reduced, Improved.'},
+    {c:'w',t:'Quantify your impact',d:'"Improved performance by 40%", "Served 10K+ users", "Reduced costs by ₹2L".'},
+    {c:'g',t:'Tailor per job posting',d:'Mirror keywords from the exact JD you\'re applying to — ATS matches literally.'},
+    {c:'',t:'Keep to 1–2 pages',d:'ATS parsers and recruiters both prefer clean, focused 1–2 page resumes.'},
+    {c:'g',t:'Add certifications',d:'AWS, Google Cloud, Microsoft Azure certs strongly boost technical ATS scores.'}
+  ].map(s=>`<div class="sugg ${s.c}"><strong>${s.t}</strong><p>${s.d}</p></div>`).join('');
+  if(chartInst)chartInst.destroy();
+  const whenReady=()=>{
+    if(typeof Chart==='undefined'){setTimeout(whenReady,200);return;}
+    chartInst=new Chart(document.getElementById('atsChart').getContext('2d'),{type:'radar',data:{labels:['Keywords','Structure','Readability','Content','Skills'],datasets:[{label:'Your Resume',data:[kwS,strS,readS,contS,skillS],backgroundColor:'rgba(64,128,255,0.15)',borderColor:'#4080ff',pointBackgroundColor:'#4080ff',borderWidth:2},{label:'Target',data:[85,90,85,85,85],backgroundColor:'rgba(124,92,248,0.08)',borderColor:'#7c5cf8',pointBackgroundColor:'#7c5cf8',borderWidth:1.5}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{labels:{color:'#8da4c8',font:{size:11}}}},scales:{r:{angleLines:{color:'rgba(255,255,255,0.05)'},grid:{color:'rgba(255,255,255,0.05)'},pointLabels:{color:'#8da4c8',font:{size:11}},ticks:{display:false},min:0,max:100}}}});
+  };
+  whenReady();
+}
+</script>
+</body>
+</html>

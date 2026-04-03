@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Connect — LifeCraft</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <style>
+    :root {
+      --bg:#060912;--bg2:#0b1020;--s1:#0f1828;--s2:#162034;--s3:#1d2a40;
+      --b1:rgba(255,255,255,0.06);--b2:rgba(255,255,255,0.11);--b3:rgba(255,255,255,0.2);
+      --t1:#e8f0ff;--t2:#8da4c8;--t3:#4e6280;
+      --blue:#4080ff;--blue2:#7aaeff;--violet:#7c5cf8;
+      --cyan:#22d4ee;--amber:#f59e0b;--rose:#f43f5e;--green:#10b981;
+      --ga:linear-gradient(135deg,#4080ff,#7c5cf8);
+      --font-d:'Syne',sans-serif;--font-b:'DM Sans',sans-serif;
+      --r:12px;--r2:18px;--r3:24px;
+    }
+    *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+    html{scroll-behavior:smooth;}
+    body{font-family:var(--font-b);background:var(--bg);color:var(--t1);min-height:100vh;overflow-x:hidden;}
+    body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
+      background:radial-gradient(ellipse 900px 700px at 15% 5%,rgba(64,128,255,0.07) 0%,transparent 55%),
+      radial-gradient(ellipse 700px 500px at 85% 85%,rgba(124,92,248,0.07) 0%,transparent 55%);}
+
+    /* NAV */
+    nav{position:sticky;top:0;z-index:999;display:flex;align-items:center;justify-content:space-between;padding:0 2.5rem;height:66px;background:rgba(6,9,18,0.88);backdrop-filter:blur(28px) saturate(180%);border-bottom:1px solid var(--b1);}
+    nav::after{content:'';position:absolute;bottom:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent 0%,rgba(64,128,255,0.4) 40%,rgba(124,92,248,0.4) 60%,transparent 100%);}
+    .logo{font-family:var(--font-d);font-size:1.5rem;font-weight:800;background:var(--ga);-webkit-background-clip:text;-webkit-text-fill-color:transparent;display:flex;align-items:center;gap:10px;letter-spacing:-0.02em;text-decoration:none;}
+    .logo-pulse{width:9px;height:9px;border-radius:50%;background:var(--ga);animation:lpulse 2.4s ease-in-out infinite;flex-shrink:0;}
+    @keyframes lpulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.6)}}
+    .nav-links{display:flex;gap:4px;}
+    .nav-btn{display:flex;align-items:center;gap:7px;padding:8px 16px;border-radius:var(--r);background:none;border:none;cursor:pointer;color:var(--t3);font-family:var(--font-b);font-size:.82rem;font-weight:500;transition:all .18s;text-decoration:none;white-space:nowrap;}
+    .nav-btn:hover{color:var(--t1);background:var(--b1);}
+    .nav-btn.active{color:var(--blue2);background:rgba(64,128,255,0.1);border:1px solid rgba(64,128,255,0.18);}
+    .nav-btn i{font-size:.75rem;}
+
+    /* PAGE */
+    .page{position:relative;z-index:1;}
+
+    /* HERO */
+    .connect-hero{
+      text-align:center;padding:5rem 2rem 4rem;position:relative;overflow:hidden;
+      border-bottom:1px solid var(--b1);
+    }
+    .connect-hero::before{
+      content:'';position:absolute;top:-100px;left:50%;transform:translateX(-50%);
+      width:800px;height:600px;border-radius:50%;
+      background:radial-gradient(ellipse,rgba(64,128,255,0.1) 0%,transparent 65%);
+      pointer-events:none;
+    }
+    .hero-badge{display:inline-flex;align-items:center;gap:8px;padding:7px 18px;border-radius:30px;background:rgba(64,128,255,0.08);border:1px solid rgba(64,128,255,0.2);font-size:.76rem;font-weight:700;color:var(--blue2);letter-spacing:.06em;text-transform:uppercase;margin-bottom:1.6rem;}
+    .hero-badge i{color:var(--cyan);}
+    .connect-hero h1{font-family:var(--font-d);font-size:clamp(2.5rem,5vw,3.8rem);font-weight:800;line-height:1.08;letter-spacing:-0.03em;margin-bottom:1rem;}
+    .connect-hero h1 span{background:var(--ga);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+    .connect-hero p{color:var(--t2);font-size:1rem;max-width:500px;margin:0 auto 2rem;line-height:1.75;}
+    .info-chips{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;}
+    .info-chip{display:flex;align-items:center;gap:7px;padding:7px 14px;border-radius:20px;background:var(--s1);border:1px solid var(--b1);font-size:.78rem;color:var(--t2);}
+    .info-chip i{font-size:.8rem;}
+
+    /* MAIN CONTENT */
+    .connect-body{max-width:1140px;margin:0 auto;padding:4rem 2rem 5rem;display:grid;grid-template-columns:1fr 1fr;gap:2rem;align-items:start;}
+
+    /* FORM CARD */
+    .form-card{background:var(--s1);border:1px solid var(--b1);border-radius:var(--r3);padding:2.25rem;box-shadow:0 4px 32px rgba(0,0,0,.5);}
+    .form-card-title{font-family:var(--font-d);font-size:1.2rem;font-weight:700;margin-bottom:1.5rem;display:flex;align-items:center;gap:11px;}
+    .fct-icon{width:36px;height:36px;border-radius:10px;background:var(--ga);display:flex;align-items:center;justify-content:center;color:#fff;font-size:.85rem;flex-shrink:0;}
+    .form-row{display:grid;grid-template-columns:1fr 1fr;gap:.85rem;margin-bottom:.85rem;}
+    .form-group{margin-bottom:.85rem;}
+    label{display:block;font-size:.74rem;font-weight:800;color:var(--t3);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px;}
+    input,textarea,select{
+      width:100%;padding:11px 14px;
+      background:var(--s2);border:1px solid var(--b2);border-radius:var(--r);
+      color:var(--t1);font-family:var(--font-b);font-size:.875rem;outline:none;
+      transition:border-color .2s,box-shadow .2s;
+    }
+    input:focus,textarea:focus,select:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(64,128,255,.12);}
+    input::placeholder,textarea::placeholder{color:var(--t3);}
+    select option{background:var(--s2);}
+    textarea{resize:vertical;min-height:110px;}
+    .submit-btn{
+      width:100%;padding:13px;border-radius:var(--r);
+      background:var(--ga);color:#fff;font-family:var(--font-b);
+      font-size:.9rem;font-weight:700;border:none;cursor:pointer;
+      box-shadow:0 6px 24px rgba(64,128,255,.35);transition:all .22s;
+      display:flex;align-items:center;justify-content:center;gap:9px;margin-top:.5rem;
+    }
+    .submit-btn:hover{transform:translateY(-2px);box-shadow:0 10px 32px rgba(64,128,255,.5);}
+    .form-note{font-size:.73rem;color:var(--t3);text-align:center;margin-top:.75rem;}
+    /* Success state */
+    .form-success{display:none;text-align:center;padding:2.5rem 1rem;}
+    .form-success .check-circle{width:64px;height:64px;border-radius:50%;background:rgba(16,185,129,.12);border:2px solid rgba(16,185,129,.3);display:flex;align-items:center;justify-content:center;font-size:1.6rem;color:var(--green);margin:0 auto 1.25rem;}
+    .form-success h3{font-family:var(--font-d);font-size:1.3rem;font-weight:700;margin-bottom:.5rem;}
+    .form-success p{color:var(--t2);font-size:.875rem;line-height:1.65;}
+    .btn-ghost{display:inline-flex;align-items:center;gap:7px;padding:10px 20px;border-radius:var(--r);background:var(--s2);color:var(--t1);border:1px solid var(--b2);font-family:var(--font-b);font-size:.82rem;font-weight:600;cursor:pointer;transition:all .18s;margin-top:1rem;}
+    .btn-ghost:hover{background:var(--s3);border-color:var(--b3);}
+
+    /* RIGHT COLUMN */
+    .right-col{display:flex;flex-direction:column;gap:1.1rem;}
+    .col-label{font-size:.73rem;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:var(--t3);margin-bottom:.6rem;}
+
+    /* SOCIAL CARDS */
+    .soc-card{
+      display:flex;align-items:center;gap:14px;padding:1rem 1.25rem;
+      border-radius:var(--r2);background:var(--s1);border:1px solid var(--b1);
+      text-decoration:none;color:var(--t1);transition:all .22s;
+      box-shadow:0 2px 16px rgba(0,0,0,.4);
+    }
+    .soc-card:hover{transform:translateX(5px);border-color:var(--b2);box-shadow:0 6px 28px rgba(0,0,0,.5);}
+    .soc-icon{width:44px;height:44px;border-radius:var(--r);display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0;}
+    .soc-info h4{font-weight:700;font-size:.88rem;margin-bottom:2px;}
+    .soc-info p{font-size:.75rem;color:var(--t3);}
+    .soc-arrow{margin-left:auto;color:var(--t3);font-size:.8rem;transition:all .2s;}
+    .soc-card:hover .soc-arrow{color:var(--blue2);transform:translate(3px,-3px);}
+
+    /* INFO STRIP */
+    .info-strip{background:var(--s1);border:1px solid var(--b1);border-radius:var(--r2);padding:1.25rem 1.5rem;display:flex;gap:1.5rem;flex-wrap:wrap;}
+    .info-item{display:flex;align-items:center;gap:10px;}
+    .ii-icon{width:36px;height:36px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:.85rem;flex-shrink:0;}
+    .ii-text strong{font-size:.82rem;font-weight:700;display:block;}
+    .ii-text span{font-size:.73rem;color:var(--t3);}
+
+    /* FAQ */
+    .faq-section{max-width:1140px;margin:0 auto;padding:0 2rem 5rem;}
+    .faq-head{font-family:var(--font-d);font-size:1.4rem;font-weight:800;margin-bottom:1.5rem;letter-spacing:-0.02em;}
+    .faq-item{border-bottom:1px solid var(--b1);overflow:hidden;}
+    .faq-q{
+      display:flex;align-items:center;justify-content:space-between;
+      padding:1.1rem 0;cursor:pointer;font-weight:600;font-size:.92rem;
+      transition:color .18s;user-select:none;
+    }
+    .faq-q:hover{color:var(--blue2);}
+    .faq-q i{color:var(--t3);font-size:.8rem;transition:transform .25s;flex-shrink:0;margin-left:1rem;}
+    .faq-a{color:var(--t2);font-size:.86rem;line-height:1.7;max-height:0;overflow:hidden;transition:max-height .35s ease,padding .3s;}
+    .faq-item.open .faq-q i{transform:rotate(180deg);}
+    .faq-item.open .faq-a{max-height:200px;padding-bottom:1.1rem;}
+
+    footer{border-top:1px solid var(--b1);padding:2rem;text-align:center;background:var(--bg2);color:var(--t3);font-size:.8rem;position:relative;z-index:1;}
+    footer strong{color:var(--t2);}
+
+    @media(max-width:900px){.connect-body{grid-template-columns:1fr;}.form-row{grid-template-columns:1fr;}}
+    @media(max-width:600px){nav{padding:0 1rem;}.nav-btn span{display:none;}.connect-hero{padding:3.5rem 1.25rem 3rem;}.connect-body,.faq-section{padding-left:1.25rem;padding-right:1.25rem;}}
+  </style>
+</head>
+<body>
+<nav>
+  <a class="logo" href="career_page_hero.html"><div class="logo-pulse"></div>LifeCraft</a>
+  <div class="nav-links">
+    <a class="nav-btn" href="career_page_hero.html"><i class="fas fa-house"></i><span>Home</span></a>
+    <a class="nav-btn" href="resume_builder.html"><i class="fas fa-file-alt"></i><span>Builder</span></a>
+    <a class="nav-btn" href="ats_analyzer.html"><i class="fas fa-chart-bar"></i><span>ATS</span></a>
+    <a class="nav-btn" href="skill_gap.html"><i class="fas fa-brain"></i><span>Skills</span></a>
+    <a class="nav-btn" href="interview_prep.html"><i class="fas fa-comments"></i><span>Interview</span></a>
+    <a class="nav-btn" href="career_guidance.html"><i class="fas fa-map"></i><span>Roadmap</span></a>
+    <a class="nav-btn active" href="connect.html"><i class="fas fa-envelope"></i><span>Connect</span></a>
+  </div>
+</nav>
+
+<div class="page">
+  <!-- HERO -->
+  <div class="connect-hero">
+    <div class="hero-badge"><i class="fas fa-paper-plane"></i>&nbsp;We'd love to hear from you</div>
+    <h1>Let's <span>Connect</span></h1>
+    <p>Have questions, feedback, or partnership ideas? Our team reads every message and replies within 24 hours. No bots, no templates — real people.</p>
+    <div class="info-chips">
+      <div class="info-chip"><i class="fas fa-clock" style="color:var(--green)"></i> Replies in &lt;24 hours</div>
+      <div class="info-chip"><i class="fas fa-shield-alt" style="color:var(--blue2)"></i> Your data stays private</div>
+      <div class="info-chip"><i class="fas fa-map-marker-alt" style="color:var(--amber)"></i> Made in India 🇮🇳</div>
+    </div>
+  </div>
+
+  <!-- MAIN GRID -->
+  <div class="connect-body">
+    <!-- FORM -->
+    <div class="form-card">
+      <div class="form-card-title"><div class="fct-icon"><i class="fas fa-envelope"></i></div>Send a Message</div>
+      <div id="form-body">
+        <div class="form-row">
+          <div><label>First Name</label><input id="cf-first" type="text" placeholder="Jane"></div>
+          <div><label>Last Name</label><input id="cf-last" type="text" placeholder="Doe"></div>
+        </div>
+        <div class="form-group"><label>Email Address</label><input id="cf-email" type="email" placeholder="jane@example.com"></div>
+        <div class="form-group"><label>Subject</label>
+          <select id="cf-subject">
+            <option>General Inquiry</option>
+            <option>Feature Request</option>
+            <option>Bug Report</option>
+            <option>Partnership / Collaboration</option>
+            <option>Career Guidance Question</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div class="form-group"><label>Your Message</label><textarea id="cf-msg" placeholder="Tell us what's on your mind — we genuinely want to hear from you…"></textarea></div>
+        <button class="submit-btn" onclick="submitForm()"><i class="fas fa-paper-plane"></i> Send Message</button>
+        <p class="form-note">We typically respond within 24 hours · No spam, ever.</p>
+      </div>
+      <div class="form-success" id="form-success">
+        <div class="check-circle"><i class="fas fa-check"></i></div>
+        <h3>Message Sent!</h3>
+        <p>Thanks for reaching out. We'll get back to you at <strong id="reply-to"></strong> within 24 hours. We read everything personally.</p>
+        <button class="btn-ghost" onclick="resetForm()"><i class="fas fa-redo"></i> Send Another</button>
+      </div>
+    </div>
+
+    <!-- RIGHT COLUMN -->
+    <div class="right-col">
+      <div class="col-label">Find us on</div>
+
+      <a class="soc-card" href="https://discord.gg" target="_blank">
+        <div class="soc-icon" style="background:#5865f2;color:#fff"><i class="fab fa-discord"></i></div>
+        <div class="soc-info"><h4>Discord Community</h4><p>Join 2,000+ students sharing career tips & resources</p></div>
+        <i class="fas fa-arrow-up-right soc-arrow"></i>
+      </a>
+      <a class="soc-card" href="https://linkedin.com" target="_blank">
+        <div class="soc-icon" style="background:#0077b5;color:#fff"><i class="fab fa-linkedin-in"></i></div>
+        <div class="soc-info"><h4>LinkedIn</h4><p>Follow LifeCraft for career tips and platform updates</p></div>
+        <i class="fas fa-arrow-up-right soc-arrow"></i>
+      </a>
+      <a class="soc-card" href="https://github.com" target="_blank">
+        <div class="soc-icon" style="background:#24292e;color:#fff"><i class="fab fa-github"></i></div>
+        <div class="soc-info"><h4>GitHub</h4><p>Open source — star the repo or contribute a PR</p></div>
+        <i class="fas fa-arrow-up-right soc-arrow"></i>
+      </a>
+      <a class="soc-card" href="https://twitter.com" target="_blank">
+        <div class="soc-icon" style="background:#1da1f2;color:#fff"><i class="fab fa-twitter"></i></div>
+        <div class="soc-info"><h4>Twitter / X</h4><p>@LifeCraftAI — quick updates and tips</p></div>
+        <i class="fas fa-arrow-up-right soc-arrow"></i>
+      </a>
+      <a class="soc-card" href="https://youtube.com" target="_blank">
+        <div class="soc-icon" style="background:#ff0000;color:#fff"><i class="fab fa-youtube"></i></div>
+        <div class="soc-info"><h4>YouTube</h4><p>Tutorial videos, walkthroughs, career guides</p></div>
+        <i class="fas fa-arrow-up-right soc-arrow"></i>
+      </a>
+      <a class="soc-card" href="mailto:hello@lifecraft.ai">
+        <div class="soc-icon" style="background:linear-gradient(135deg,#4080ff,#7c5cf8);color:#fff"><i class="fas fa-envelope"></i></div>
+        <div class="soc-info"><h4>Email Us Directly</h4><p>hello@lifecraft.ai</p></div>
+        <i class="fas fa-arrow-up-right soc-arrow"></i>
+      </a>
+
+      <!-- INFO STRIP -->
+      <div class="info-strip" style="margin-top:.5rem;">
+        <div class="info-item">
+          <div class="ii-icon" style="background:rgba(16,185,129,.12);color:var(--green)"><i class="fas fa-clock"></i></div>
+          <div class="ii-text"><strong>Fast Response</strong><span>Under 24 hours</span></div>
+        </div>
+        <div class="info-item">
+          <div class="ii-icon" style="background:rgba(64,128,255,.12);color:var(--blue2)"><i class="fas fa-lock"></i></div>
+          <div class="ii-text"><strong>Privacy First</strong><span>Data stays yours</span></div>
+        </div>
+        <div class="info-item">
+          <div class="ii-icon" style="background:rgba(245,158,11,.12);color:var(--amber)"><i class="fas fa-users"></i></div>
+          <div class="ii-text"><strong>Real Team</strong><span>No bots here</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FAQ -->
+  <div class="faq-section">
+    <div class="faq-head">Frequently Asked Questions</div>
+    <div class="faq-item" onclick="toggleFaq(this)">
+      <div class="faq-q">Is LifeCraft completely free to use? <i class="fas fa-chevron-down"></i></div>
+      <div class="faq-a">Yes. All core features — resume builder, ATS analyzer, skill gap detector, interview prep, and career roadmaps — are 100% free. We may introduce optional premium features later, but the essentials will always stay free.</div>
+    </div>
+    <div class="faq-item" onclick="toggleFaq(this)">
+      <div class="faq-q">How accurate is the ATS score? <i class="fas fa-chevron-down"></i></div>
+      <div class="faq-a">Our scoring is based on keyword analysis, structural best practices, and content quality metrics aligned with how top ATS systems like Workday, Greenhouse, and Lever evaluate resumes. Resumes scoring 75+ consistently perform well in automated screening.</div>
+    </div>
+    <div class="faq-item" onclick="toggleFaq(this)">
+      <div class="faq-q">Is my resume data stored or sent anywhere? <i class="fas fa-chevron-down"></i></div>
+      <div class="faq-a">No. All resume data is saved locally in your browser's localStorage — nothing is transmitted to our servers. Your information stays completely private and on your device.</div>
+    </div>
+    <div class="faq-item" onclick="toggleFaq(this)">
+      <div class="faq-q">Can I use LifeCraft for non-tech careers? <i class="fas fa-chevron-down"></i></div>
+      <div class="faq-a">The current module is optimised for tech careers (web dev, data science, cloud, AI/ML, cybersecurity, UI/UX). Support for management, finance, and other domains is on our roadmap — reach out to vote for your field!</div>
+    </div>
+    <div class="faq-item" onclick="toggleFaq(this)">
+      <div class="faq-q">How can I contribute to LifeCraft? <i class="fas fa-chevron-down"></i></div>
+      <div class="faq-a">We love contributors! You can open issues or pull requests on our GitHub, suggest features using the form above, or simply share LifeCraft with students who need it. Every bit of feedback directly shapes the platform.</div>
+    </div>
+    <div class="faq-item" onclick="toggleFaq(this)">
+      <div class="faq-q">Do you offer any mentorship or 1-on-1 career guidance? <i class="fas fa-chevron-down"></i></div>
+      <div class="faq-a">Not yet, but it's on our roadmap! Join our Discord community in the meantime — many experienced professionals there actively help students with career questions. Drop a message to our team if you'd like to be notified when mentorship launches.</div>
+    </div>
+  </div>
+</div>
+
+<footer><strong>LifeCraft</strong> &nbsp;·&nbsp; Built for students & early professionals &nbsp;·&nbsp; Made in India 🇮🇳 &nbsp;·&nbsp; © 2025</footer>
+
+<script>
+function submitForm(){
+  const first=document.getElementById('cf-first').value.trim();
+  const email=document.getElementById('cf-email').value.trim();
+  const msg=document.getElementById('cf-msg').value.trim();
+  if(!first||!email||!msg){
+    alert('Please fill in your name, email, and message.');return;
+  }
+  if(!/\S+@\S+\.\S+/.test(email)){alert('Please enter a valid email address.');return;}
+  document.getElementById('reply-to').textContent=email;
+  document.getElementById('form-body').style.display='none';
+  document.getElementById('form-success').style.display='block';
+}
+function resetForm(){
+  document.getElementById('form-body').style.display='block';
+  document.getElementById('form-success').style.display='none';
+  ['cf-first','cf-last','cf-email','cf-msg'].forEach(id=>document.getElementById(id).value='');
+}
+function toggleFaq(el){
+  const wasOpen=el.classList.contains('open');
+  document.querySelectorAll('.faq-item').forEach(f=>f.classList.remove('open'));
+  if(!wasOpen)el.classList.add('open');
+}
+</script>
+</body>
+</html>

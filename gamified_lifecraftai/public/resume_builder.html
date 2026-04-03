@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Resume Builder — LifeCraft</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js" defer></script>
+  <style>
+    :root{--bg:#060912;--bg2:#0b1020;--s1:#0f1828;--s2:#162034;--s3:#1d2a40;--b1:rgba(255,255,255,0.06);--b2:rgba(255,255,255,0.11);--b3:rgba(255,255,255,0.2);--t1:#e8f0ff;--t2:#8da4c8;--t3:#4e6280;--blue:#4080ff;--blue2:#7aaeff;--violet:#7c5cf8;--cyan:#22d4ee;--amber:#f59e0b;--rose:#f43f5e;--green:#10b981;--orange:#f97316;--ga:linear-gradient(135deg,#4080ff,#7c5cf8);--font-d:'Syne',sans-serif;--font-b:'DM Sans',sans-serif;--r:12px;--r2:18px;--r3:24px;}
+    *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+    body{font-family:var(--font-b);background:var(--bg);color:var(--t1);min-height:100vh;overflow-x:hidden;}
+    body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;background:radial-gradient(ellipse 900px 700px at 15% 5%,rgba(64,128,255,0.07) 0%,transparent 55%),radial-gradient(ellipse 700px 500px at 85% 85%,rgba(124,92,248,0.07) 0%,transparent 55%);}
+    nav{position:sticky;top:0;z-index:999;display:flex;align-items:center;justify-content:space-between;padding:0 2.5rem;height:66px;background:rgba(6,9,18,0.88);backdrop-filter:blur(28px);border-bottom:1px solid var(--b1);}
+    nav::after{content:'';position:absolute;bottom:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(64,128,255,.4) 40%,rgba(124,92,248,.4) 60%,transparent);}
+    .logo{font-family:var(--font-d);font-size:1.5rem;font-weight:800;background:var(--ga);-webkit-background-clip:text;-webkit-text-fill-color:transparent;display:flex;align-items:center;gap:10px;text-decoration:none;}
+    .logo-pulse{width:9px;height:9px;border-radius:50%;background:var(--ga);animation:lpulse 2.4s ease-in-out infinite;}
+    @keyframes lpulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.6)}}
+    .nav-links{display:flex;gap:4px;}
+    .nav-btn{display:flex;align-items:center;gap:7px;padding:8px 16px;border-radius:var(--r);background:none;border:none;cursor:pointer;color:var(--t3);font-family:var(--font-b);font-size:.82rem;font-weight:500;transition:all .18s;text-decoration:none;white-space:nowrap;}
+    .nav-btn:hover{color:var(--t1);background:var(--b1);}
+    .nav-btn.active{color:var(--blue2);background:rgba(64,128,255,.1);border:1px solid rgba(64,128,255,.18);}
+    .nav-btn i{font-size:.75rem;}
+    .page{position:relative;z-index:1;}
+
+    /* PAGE HEADER */
+    .pg-header{padding:2.5rem 2rem 1.5rem;border-bottom:1px solid var(--b1);}
+    .pg-eyebrow{font-size:.73rem;font-weight:800;text-transform:uppercase;letter-spacing:.12em;color:var(--blue2);margin-bottom:.4rem;}
+    .pg-title{font-family:var(--font-d);font-size:1.8rem;font-weight:800;letter-spacing:-0.025em;margin-bottom:.3rem;}
+    .pg-title span{background:var(--ga);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+    .pg-sub{color:var(--t2);font-size:.88rem;}
+
+    /* BUILDER LAYOUT */
+    .builder-wrap{display:grid;grid-template-columns:380px 1fr;min-height:calc(100vh - 160px);gap:0;}
+    .left-panel{background:var(--s1);border-right:1px solid var(--b1);overflow-y:auto;max-height:calc(100vh - 130px);position:sticky;top:66px;}
+    .left-top{padding:1.25rem 1.5rem;border-bottom:1px solid var(--b1);display:flex;align-items:center;justify-content:space-between;background:var(--s1);position:sticky;top:0;z-index:10;}
+    .left-top h3{font-family:var(--font-d);font-size:.95rem;font-weight:700;}
+    .top-btns{display:flex;gap:7px;}
+    .btn-p{display:inline-flex;align-items:center;gap:7px;padding:8px 16px;border-radius:var(--r);background:var(--ga);color:#fff;font-family:var(--font-b);font-size:.78rem;font-weight:700;border:none;cursor:pointer;box-shadow:0 4px 16px rgba(64,128,255,.3);transition:all .2s;}
+    .btn-p:hover{transform:translateY(-1px);}
+    .btn-g2{display:inline-flex;align-items:center;gap:7px;padding:8px 16px;border-radius:var(--r);background:var(--s2);color:var(--t1);border:1px solid var(--b2);font-family:var(--font-b);font-size:.78rem;font-weight:600;cursor:pointer;transition:all .2s;}
+    .btn-g2:hover{background:var(--s3);}
+    /* Templates */
+    .tmpl-section{padding:1rem 1.5rem;border-bottom:1px solid var(--b1);}
+    .tmpl-label{font-size:.72rem;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:var(--t3);margin-bottom:.6rem;}
+    .tmpl-row{display:flex;gap:6px;flex-wrap:wrap;}
+    .tmpl-tag{padding:6px 14px;border-radius:20px;font-size:.75rem;font-weight:700;cursor:pointer;background:var(--s2);color:var(--t3);border:1px solid var(--b1);transition:all .18s;letter-spacing:.02em;}
+    .tmpl-tag.active{background:var(--ga);color:#fff;border-color:transparent;box-shadow:0 4px 14px rgba(64,128,255,.3);}
+    /* Accordion */
+    .acc{border-bottom:1px solid var(--b1);}
+    .acc-head{display:flex;align-items:center;justify-content:space-between;padding:13px 1.5rem;cursor:pointer;background:transparent;transition:background .18s;}
+    .acc-head:hover{background:var(--s2);}
+    .acc-left{display:flex;align-items:center;gap:9px;font-weight:600;font-size:.83rem;color:var(--t2);}
+    .acc-icon{font-size:.78rem;}
+    .acc-chev{color:var(--t3);font-size:.72rem;transition:transform .22s;}
+    .acc-body{padding:0 1.5rem;max-height:0;overflow:hidden;transition:max-height .35s ease,padding .28s;}
+    .acc-body.open{max-height:1600px;padding:1rem 1.5rem 1.25rem;}
+    /* Form elements */
+    .fg{margin-bottom:.8rem;}
+    label{display:block;font-size:.72rem;font-weight:800;text-transform:uppercase;letter-spacing:.06em;color:var(--t3);margin-bottom:5px;}
+    input,textarea,select{width:100%;padding:10px 13px;background:var(--s2);border:1px solid var(--b2);border-radius:var(--r);color:var(--t1);font-family:var(--font-b);font-size:.855rem;outline:none;transition:border-color .2s,box-shadow .2s;}
+    input:focus,textarea:focus,select:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(64,128,255,.1);}
+    input::placeholder,textarea::placeholder{color:var(--t3);}
+    textarea{resize:vertical;min-height:76px;}
+    .entry-block{background:var(--s3);border-radius:var(--r);padding:11px;margin-bottom:8px;position:relative;border:1px solid var(--b1);}
+    .entry-rm{position:absolute;top:9px;right:9px;background:none;border:none;color:var(--t3);cursor:pointer;font-size:.78rem;padding:3px;transition:color .15s;}
+    .entry-rm:hover{color:var(--rose);}
+    .add-btn{display:flex;align-items:center;gap:6px;color:var(--blue2);font-size:.8rem;font-weight:700;cursor:pointer;padding:5px 0;background:none;border:none;font-family:var(--font-b);margin-top:4px;}
+    .skill-row{display:flex;gap:7px;margin-bottom:.6rem;}
+    .skill-row input{flex:1;}
+    .btn-sm-out{padding:8px 14px;border-radius:var(--r);background:transparent;color:var(--blue2);border:1px solid rgba(64,128,255,.35);font-family:var(--font-b);font-size:.78rem;font-weight:700;cursor:pointer;transition:all .18s;white-space:nowrap;}
+    .btn-sm-out:hover{background:rgba(64,128,255,.08);}
+    .skill-cloud{display:flex;flex-wrap:wrap;gap:5px;}
+    .s-tag{display:inline-flex;align-items:center;gap:4px;padding:4px 10px;border-radius:20px;background:rgba(64,128,255,.12);color:var(--blue2);font-size:.75rem;font-weight:700;border:1px solid rgba(64,128,255,.2);}
+    .s-rm{cursor:pointer;color:var(--t3);font-size:.85rem;}
+    .s-rm:hover{color:var(--rose);}
+
+    /* RIGHT PREVIEW PANEL */
+    .right-panel{padding:1.5rem;overflow-y:auto;}
+    .preview-actions{display:flex;gap:8px;margin-bottom:1rem;align-items:center;}
+    .preview-label{font-size:.72rem;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:var(--t3);margin-right:auto;}
+    .resume-page{background:#fff;color:#1a2035;padding:44px 48px;border-radius:var(--r);box-shadow:0 16px 64px rgba(0,0,0,.7);font-family:'DM Sans',sans-serif;font-size:13.5px;min-height:920px;max-width:780px;margin:0 auto;}
+    .resume-page.modern-tmpl{border-top:5px solid #4080ff;}
+    .resume-page.executive-tmpl{border-left:5px solid #7c5cf8;}
+    .resume-page.compact-tmpl{font-size:12px;padding:28px 34px;}
+    /* Resume internals */
+    .res-h{text-align:center;padding-bottom:16px;margin-bottom:18px;border-bottom:2px solid #e4e9f5;}
+    .res-name{font-family:'Syne',sans-serif;font-size:1.75rem;font-weight:800;color:#0c1528;letter-spacing:-0.02em;}
+    .res-role{color:#4080ff;font-weight:700;font-size:.88rem;margin:4px 0 10px;}
+    .res-contact{display:flex;justify-content:center;gap:14px;flex-wrap:wrap;font-size:.74rem;color:#5a6a8a;}
+    .res-contact span{display:flex;align-items:center;gap:3px;}
+    .res-sec{margin-bottom:16px;}
+    .res-sec h3{font-size:.7rem;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:#4080ff;border-bottom:1px solid #e4e9f5;padding-bottom:5px;margin-bottom:9px;}
+    .res-it{margin-bottom:9px;}
+    .res-it-top{display:flex;justify-content:space-between;align-items:baseline;}
+    .res-it-title{font-weight:800;color:#0c1528;font-size:.88rem;}
+    .res-it-date{font-size:.72rem;color:#7a8aaa;white-space:nowrap;}
+    .res-it-sub{color:#5a6a8a;font-size:.78rem;font-weight:600;margin:2px 0;}
+    .res-desc{color:#384055;font-size:.8rem;line-height:1.55;margin-top:4px;}
+    .res-desc ul{padding-left:15px;}
+    .res-desc li{margin-bottom:2px;}
+    .res-skills{display:flex;flex-wrap:wrap;gap:5px;}
+    .res-stag{padding:3px 9px;border-radius:10px;background:#eef2ff;color:#4080ff;font-size:.72rem;font-weight:700;}
+
+    @media(max-width:1000px){.builder-wrap{grid-template-columns:1fr;}.left-panel{max-height:none;position:static;border-right:none;border-bottom:1px solid var(--b1);}.right-panel{padding:1.25rem;}}
+    @media(max-width:600px){nav{padding:0 1rem;}.nav-btn span{display:none;}.pg-header{padding:1.5rem 1.25rem 1rem;}.resume-page{padding:28px 24px;}}
+  </style>
+</head>
+<body>
+<nav>
+  <a class="logo" href="career_page_hero.html"><div class="logo-pulse"></div>LifeCraft</a>
+  <div class="nav-links">
+    <a class="nav-btn" href="career_page_hero.html"><i class="fas fa-house"></i><span>Home</span></a>
+    <a class="nav-btn active" href="resume_builder.html"><i class="fas fa-file-alt"></i><span>Builder</span></a>
+    <a class="nav-btn" href="ats_analyzer.html"><i class="fas fa-chart-bar"></i><span>ATS</span></a>
+    <a class="nav-btn" href="skill_gap.html"><i class="fas fa-brain"></i><span>Skills</span></a>
+    <a class="nav-btn" href="interview_prep.html"><i class="fas fa-comments"></i><span>Interview</span></a>
+    <a class="nav-btn" href="career_guidance.html"><i class="fas fa-map"></i><span>Roadmap</span></a>
+    <a class="nav-btn" href="connect.html"><i class="fas fa-envelope"></i><span>Connect</span></a>
+  </div>
+</nav>
+<div class="page">
+  <div class="pg-header">
+    <div class="pg-eyebrow">Step 01</div>
+    <div class="pg-title">Resume <span>Builder</span></div>
+    <div class="pg-sub">Fill your details — the preview updates live. Download as ATS-optimised PDF when ready.</div>
+  </div>
+  <div class="builder-wrap">
+    <!-- LEFT CONTROLS -->
+    <div class="left-panel">
+      <div class="left-top">
+        <h3>Controls</h3>
+        <div class="top-btns">
+          <button class="btn-p" id="exportPdfBtn"><i class="fas fa-file-pdf"></i> PDF</button>
+          <button class="btn-g2" id="saveBtn"><i class="fas fa-save"></i> Save</button>
+        </div>
+      </div>
+      <div class="tmpl-section">
+        <div class="tmpl-label">Template</div>
+        <div class="tmpl-row">
+          <span class="tmpl-tag active" data-tmpl="clean">Clean</span>
+          <span class="tmpl-tag" data-tmpl="modern">Modern</span>
+          <span class="tmpl-tag" data-tmpl="compact">Compact</span>
+          <span class="tmpl-tag" data-tmpl="executive">Executive</span>
+        </div>
+      </div>
+      <!-- Profile -->
+      <div class="acc">
+        <div class="acc-head" onclick="toggleAcc(this)">
+          <span class="acc-left"><i class="fas fa-user acc-icon" style="color:var(--blue2)"></i>Profile</span>
+          <i class="fas fa-chevron-down acc-chev"></i>
+        </div>
+        <div class="acc-body open">
+          <div class="fg"><label>Full Name</label><input id="r-name" value="Jane Doe" oninput="buildPreview()"></div>
+          <div class="fg"><label>Job Title</label><input id="r-title" value="Full-Stack Engineer" oninput="buildPreview()"></div>
+          <div class="fg"><label>Email</label><input id="r-email" value="jane@example.com" oninput="buildPreview()"></div>
+          <div class="fg"><label>Phone</label><input id="r-phone" value="+91 98765 43210" oninput="buildPreview()"></div>
+          <div class="fg"><label>Location</label><input id="r-location" value="Bengaluru, India" oninput="buildPreview()"></div>
+          <div class="fg"><label>LinkedIn / GitHub</label><input id="r-links" value="linkedin.com/in/janedoe" oninput="buildPreview()"></div>
+          <div class="fg"><label>Summary</label><textarea id="r-summary" oninput="buildPreview()">Passionate full-stack engineer with 3+ years building scalable web applications. Expert in React, Node.js, and cloud platforms. Delivered products used by 10K+ users.</textarea></div>
+        </div>
+      </div>
+      <!-- Experience -->
+      <div class="acc">
+        <div class="acc-head" onclick="toggleAcc(this)">
+          <span class="acc-left"><i class="fas fa-briefcase acc-icon" style="color:var(--cyan)"></i>Experience</span>
+          <i class="fas fa-chevron-down acc-chev"></i>
+        </div>
+        <div class="acc-body" id="exp-list">
+          <div class="entry-block">
+            <button class="entry-rm" onclick="removeEntry(this)"><i class="fas fa-times"></i></button>
+            <div class="fg"><label>Job Title</label><input class="e-title" value="Senior Software Developer" oninput="buildPreview()"></div>
+            <div class="fg"><label>Company</label><input class="e-co" value="Tech Solutions Ltd." oninput="buildPreview()"></div>
+            <div class="fg"><label>Duration</label><input class="e-dur" value="Jan 2022 – Present" oninput="buildPreview()"></div>
+            <div class="fg"><label>Responsibilities (one per line)</label><textarea class="e-desc" oninput="buildPreview()">Led migration of legacy monolith to React/Node.js microservices
+Reduced page load time by 60% through code splitting
+Mentored 3 junior developers and conducted weekly code reviews</textarea></div>
+          </div>
+          <button class="add-btn" onclick="addExp()"><i class="fas fa-plus-circle"></i> Add Experience</button>
+        </div>
+      </div>
+      <!-- Projects -->
+      <div class="acc">
+        <div class="acc-head" onclick="toggleAcc(this)">
+          <span class="acc-left"><i class="fas fa-code acc-icon" style="color:var(--amber)"></i>Projects</span>
+          <i class="fas fa-chevron-down acc-chev"></i>
+        </div>
+        <div class="acc-body" id="proj-list">
+          <div class="entry-block">
+            <button class="entry-rm" onclick="removeEntry(this)"><i class="fas fa-times"></i></button>
+            <div class="fg"><label>Project Name</label><input class="p-name" value="E-Commerce Platform" oninput="buildPreview()"></div>
+            <div class="fg"><label>Tech Stack</label><input class="p-tech" value="React, Node.js, MongoDB, AWS" oninput="buildPreview()"></div>
+            <div class="fg"><label>Description</label><textarea class="p-desc" oninput="buildPreview()">Full-featured e-commerce platform with payment integration and real-time inventory. Served 10K+ monthly users.</textarea></div>
+          </div>
+          <button class="add-btn" onclick="addProj()"><i class="fas fa-plus-circle"></i> Add Project</button>
+        </div>
+      </div>
+      <!-- Education -->
+      <div class="acc">
+        <div class="acc-head" onclick="toggleAcc(this)">
+          <span class="acc-left"><i class="fas fa-graduation-cap acc-icon" style="color:#a78bfa"></i>Education</span>
+          <i class="fas fa-chevron-down acc-chev"></i>
+        </div>
+        <div class="acc-body" id="edu-list">
+          <div class="entry-block">
+            <button class="entry-rm" onclick="removeEntry(this)"><i class="fas fa-times"></i></button>
+            <div class="fg"><label>Degree</label><input class="ed-deg" value="B.Tech in Computer Science" oninput="buildPreview()"></div>
+            <div class="fg"><label>Institution</label><input class="ed-inst" value="VIT University, Vellore" oninput="buildPreview()"></div>
+            <div class="fg"><label>Year / GPA</label><input class="ed-yr" value="2018 – 2022 | CGPA: 8.6" oninput="buildPreview()"></div>
+          </div>
+          <button class="add-btn" onclick="addEdu()"><i class="fas fa-plus-circle"></i> Add Education</button>
+        </div>
+      </div>
+      <!-- Skills -->
+      <div class="acc">
+        <div class="acc-head" onclick="toggleAcc(this)">
+          <span class="acc-left"><i class="fas fa-tools acc-icon" style="color:var(--rose)"></i>Skills</span>
+          <i class="fas fa-chevron-down acc-chev"></i>
+        </div>
+        <div class="acc-body open">
+          <div class="skill-row">
+            <input id="skill-inp" placeholder="Type skill, press Enter…" onkeydown="addSkill(event)">
+            <button class="btn-sm-out" onclick="addSkill({key:'Enter'})"><i class="fas fa-plus"></i></button>
+          </div>
+          <div class="skill-cloud" id="skill-cloud"></div>
+        </div>
+      </div>
+      <!-- Certifications -->
+      <div class="acc">
+        <div class="acc-head" onclick="toggleAcc(this)">
+          <span class="acc-left"><i class="fas fa-certificate acc-icon" style="color:var(--green)"></i>Certifications</span>
+          <i class="fas fa-chevron-down acc-chev"></i>
+        </div>
+        <div class="acc-body" id="cert-list">
+          <div class="entry-block">
+            <button class="entry-rm" onclick="removeEntry(this)"><i class="fas fa-times"></i></button>
+            <div class="fg"><label>Certification Name</label><input class="c-name" value="AWS Certified Solutions Architect" oninput="buildPreview()"></div>
+            <div class="fg"><label>Issuer & Year</label><input class="c-iss" value="Amazon Web Services · 2023" oninput="buildPreview()"></div>
+          </div>
+          <button class="add-btn" onclick="addCert()"><i class="fas fa-plus-circle"></i> Add Certification</button>
+        </div>
+      </div>
+      <!-- Achievements -->
+      <div class="acc">
+        <div class="acc-head" onclick="toggleAcc(this)">
+          <span class="acc-left"><i class="fas fa-trophy acc-icon" style="color:var(--orange)"></i>Achievements</span>
+          <i class="fas fa-chevron-down acc-chev"></i>
+        </div>
+        <div class="acc-body">
+          <div class="fg"><label>Achievements (one per line)</label>
+          <textarea id="r-ach" oninput="buildPreview()">Won 1st place at Smart India Hackathon 2022
+Ranked top 5% on LeetCode (1800+ rating)
+Open source contributor — 200+ GitHub stars</textarea></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT PREVIEW -->
+    <div class="right-panel">
+      <div class="preview-actions">
+        <span class="preview-label">Live Preview</span>
+        <button class="btn-p" onclick="exportPdf()"><i class="fas fa-download"></i> Download PDF</button>
+        <a class="btn-g2" href="ats_analyzer.html"><i class="fas fa-search"></i> Analyze</a>
+      </div>
+      <div class="resume-page clean-tmpl" id="resume-out"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+let skills=['JavaScript','React','Node.js','MongoDB','AWS','Docker','Git','Python'];
+function addSkill(e){if(e.key!=='Enter')return;const i=document.getElementById('skill-inp'),v=i.value.trim();if(!v||skills.includes(v))return;skills.push(v);i.value='';renderSkills();buildPreview();}
+function removeSkill(s){skills=skills.filter(x=>x!==s);renderSkills();buildPreview();}
+function renderSkills(){document.getElementById('skill-cloud').innerHTML=skills.map(s=>`<span class="s-tag">${s}<span class="s-rm" onclick="removeSkill('${s}')">×</span></span>`).join('');}
+const rmHtml='<button class="entry-rm" onclick="removeEntry(this)"><i class="fas fa-times"></i></button>';
+function addEntry(id,html){const l=document.getElementById(id),btn=l.querySelector('.add-btn'),d=document.createElement('div');d.className='entry-block';d.innerHTML=html;l.insertBefore(d,btn);buildPreview();}
+function addExp(){addEntry('exp-list',`${rmHtml}<div class="fg"><label>Job Title</label><input class="e-title" placeholder="Software Engineer" oninput="buildPreview()"></div><div class="fg"><label>Company</label><input class="e-co" placeholder="Company Name" oninput="buildPreview()"></div><div class="fg"><label>Duration</label><input class="e-dur" placeholder="2020–2022" oninput="buildPreview()"></div><div class="fg"><label>Responsibilities</label><textarea class="e-desc" placeholder="One bullet per line…" oninput="buildPreview()"></textarea></div>`);}
+function addProj(){addEntry('proj-list',`${rmHtml}<div class="fg"><label>Project Name</label><input class="p-name" placeholder="Project Title" oninput="buildPreview()"></div><div class="fg"><label>Tech Stack</label><input class="p-tech" placeholder="React, Node…" oninput="buildPreview()"></div><div class="fg"><label>Description</label><textarea class="p-desc" oninput="buildPreview()"></textarea></div>`);}
+function addEdu(){addEntry('edu-list',`${rmHtml}<div class="fg"><label>Degree</label><input class="ed-deg" placeholder="B.Tech CSE" oninput="buildPreview()"></div><div class="fg"><label>Institution</label><input class="ed-inst" placeholder="University Name" oninput="buildPreview()"></div><div class="fg"><label>Year / GPA</label><input class="ed-yr" placeholder="2018–2022" oninput="buildPreview()"></div>`);}
+function addCert(){addEntry('cert-list',`${rmHtml}<div class="fg"><label>Certification</label><input class="c-name" placeholder="Cert Name" oninput="buildPreview()"></div><div class="fg"><label>Issuer & Year</label><input class="c-iss" placeholder="AWS, 2023" oninput="buildPreview()"></div>`);}
+function removeEntry(btn){btn.closest('.entry-block').remove();buildPreview();}
+function toggleAcc(h){const b=h.nextElementSibling;b.classList.toggle('open');h.querySelector('.acc-chev').style.transform=b.classList.contains('open')?'rotate(180deg)':'';}
+function buildPreview(){
+  const g=id=>document.getElementById(id)?.value||'';
+  const ach=g('r-ach').split('\n').filter(l=>l.trim()).map(l=>`<li>${l.trim()}</li>`).join('');
+  const exp=[...document.querySelectorAll('#exp-list .entry-block')].map(b=>{
+    const bullets=(b.querySelector('.e-desc')?.value||'').split('\n').filter(l=>l.trim()).map(l=>`<li>${l.trim()}</li>`).join('');
+    return `<div class="res-it"><div class="res-it-top"><span class="res-it-title">${b.querySelector('.e-title')?.value||''}</span><span class="res-it-date">${b.querySelector('.e-dur')?.value||''}</span></div><div class="res-it-sub">${b.querySelector('.e-co')?.value||''}</div><div class="res-desc"><ul>${bullets}</ul></div></div>`;
+  }).join('');
+  const proj=[...document.querySelectorAll('#proj-list .entry-block')].map(b=>`<div class="res-it"><div class="res-it-top"><span class="res-it-title">${b.querySelector('.p-name')?.value||''}</span><span class="res-it-date" style="font-size:.7rem;color:#7c5cf8;">${b.querySelector('.p-tech')?.value||''}</span></div><div class="res-desc">${b.querySelector('.p-desc')?.value||''}</div></div>`).join('');
+  const edu=[...document.querySelectorAll('#edu-list .entry-block')].map(b=>`<div class="res-it"><div class="res-it-top"><span class="res-it-title">${b.querySelector('.ed-deg')?.value||''}</span><span class="res-it-date">${b.querySelector('.ed-yr')?.value||''}</span></div><div class="res-it-sub">${b.querySelector('.ed-inst')?.value||''}</div></div>`).join('');
+  const cert=[...document.querySelectorAll('#cert-list .entry-block')].map(b=>`<div class="res-it"><span class="res-it-title">${b.querySelector('.c-name')?.value||''}</span><span class="res-it-sub"> · ${b.querySelector('.c-iss')?.value||''}</span></div>`).join('');
+  document.getElementById('resume-out').innerHTML=`
+    <div class="res-h"><div class="res-name">${g('r-name')}</div><div class="res-role">${g('r-title')}</div>
+    <div class="res-contact">${g('r-email')?`<span>✉ ${g('r-email')}</span>`:''}${g('r-phone')?`<span>📞 ${g('r-phone')}</span>`:''}${g('r-location')?`<span>📍 ${g('r-location')}</span>`:''}${g('r-links')?`<span>🔗 ${g('r-links')}</span>`:''}</div></div>
+    ${g('r-summary')?`<div class="res-sec"><h3>Summary</h3><div class="res-desc">${g('r-summary')}</div></div>`:''}
+    ${exp?`<div class="res-sec"><h3>Experience</h3>${exp}</div>`:''}
+    ${proj?`<div class="res-sec"><h3>Projects</h3>${proj}</div>`:''}
+    ${skills.length?`<div class="res-sec"><h3>Skills</h3><div class="res-skills">${skills.map(s=>`<span class="res-stag">${s}</span>`).join('')}</div></div>`:''}
+    ${edu?`<div class="res-sec"><h3>Education</h3>${edu}</div>`:''}
+    ${cert?`<div class="res-sec"><h3>Certifications</h3>${cert}</div>`:''}
+    ${ach?`<div class="res-sec"><h3>Achievements</h3><ul class="res-desc">${ach}</ul></div>`:''}`;
+}
+document.querySelectorAll('.tmpl-tag').forEach(t=>t.addEventListener('click',function(){
+  document.querySelectorAll('.tmpl-tag').forEach(x=>x.classList.remove('active'));this.classList.add('active');
+  document.getElementById('resume-out').className=`resume-page ${this.dataset.tmpl}-tmpl`;
+}));
+function exportPdf(){if(window.html2pdf){html2pdf().set({margin:.5,filename:'LifeCraft_Resume.pdf',html2canvas:{scale:2},jsPDF:{unit:'in',format:'letter'}}).from(document.getElementById('resume-out')).save();}else window.print();}
+document.getElementById('exportPdfBtn').addEventListener('click',exportPdf);
+document.getElementById('saveBtn').addEventListener('click',()=>{localStorage.setItem('lc_resume',JSON.stringify({name:document.getElementById('r-name').value,skills}));alert('Resume saved to browser storage!');});
+renderSkills();buildPreview();
+</script>
+</body>
+</html>

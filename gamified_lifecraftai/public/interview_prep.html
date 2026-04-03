@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Interview Prep — LifeCraft</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <style>
+    :root{--bg:#060912;--s1:#0f1828;--s2:#162034;--s3:#1d2a40;--b1:rgba(255,255,255,0.06);--b2:rgba(255,255,255,0.11);--t1:#e8f0ff;--t2:#8da4c8;--t3:#4e6280;--blue:#4080ff;--blue2:#7aaeff;--violet:#7c5cf8;--cyan:#22d4ee;--amber:#f59e0b;--rose:#f43f5e;--green:#10b981;--ga:linear-gradient(135deg,#4080ff,#7c5cf8);--gd:linear-gradient(135deg,#f43f5e,#7c5cf8);--font-d:'Syne',sans-serif;--font-b:'DM Sans',sans-serif;--r:12px;--r2:18px;}
+    *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+    body{font-family:var(--font-b);background:var(--bg);color:var(--t1);min-height:100vh;}
+    body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;background:radial-gradient(ellipse 900px 700px at 15% 5%,rgba(64,128,255,0.07) 0%,transparent 55%),radial-gradient(ellipse 700px 500px at 85% 85%,rgba(124,92,248,0.07) 0%,transparent 55%);}
+    nav{position:sticky;top:0;z-index:999;display:flex;align-items:center;justify-content:space-between;padding:0 2.5rem;height:66px;background:rgba(6,9,18,0.88);backdrop-filter:blur(28px);border-bottom:1px solid var(--b1);}
+    nav::after{content:'';position:absolute;bottom:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(64,128,255,.4) 40%,rgba(124,92,248,.4) 60%,transparent);}
+    .logo{font-family:var(--font-d);font-size:1.5rem;font-weight:800;background:var(--ga);-webkit-background-clip:text;-webkit-text-fill-color:transparent;display:flex;align-items:center;gap:10px;text-decoration:none;}
+    .lp{width:9px;height:9px;border-radius:50%;background:var(--ga);animation:lp 2.4s ease-in-out infinite;}
+    @keyframes lp{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.6)}}
+    .nl{display:flex;gap:4px;}
+    .nb{display:flex;align-items:center;gap:7px;padding:8px 16px;border-radius:var(--r);background:none;border:none;cursor:pointer;color:var(--t3);font-family:var(--font-b);font-size:.82rem;font-weight:500;transition:all .18s;text-decoration:none;white-space:nowrap;}
+    .nb:hover{color:var(--t1);background:rgba(255,255,255,.06);}
+    .nb.active{color:var(--blue2);background:rgba(64,128,255,.1);border:1px solid rgba(64,128,255,.18);}
+    .nb i{font-size:.75rem;}
+    .page{position:relative;z-index:1;}
+    .inner{max-width:1200px;margin:0 auto;padding:2rem 2rem 4rem;}
+    .ey{font-size:.73rem;font-weight:800;text-transform:uppercase;letter-spacing:.12em;color:#a78bfa;margin-bottom:.4rem;}
+    .ptitle{font-family:var(--font-d);font-size:1.8rem;font-weight:800;letter-spacing:-0.025em;margin-bottom:.3rem;}
+    .ptitle span{background:var(--gd);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+    .psub{color:var(--t2);font-size:.88rem;margin-bottom:1.75rem;}
+    .g2{display:grid;grid-template-columns:290px 1fr;gap:1.25rem;}
+    .lbl{font-size:.72rem;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:var(--t3);margin-bottom:.65rem;}
+    /* Topic buttons */
+    .tlist{display:flex;flex-direction:column;gap:5px;}
+    .tbtn{display:flex;align-items:center;gap:10px;padding:11px 13px;border-radius:var(--r);background:var(--s1);border:1px solid var(--b1);cursor:pointer;transition:all .18s;color:var(--t1);font-family:var(--font-b);font-size:.83rem;text-align:left;}
+    .tbtn:hover,.tbtn.active{background:rgba(64,128,255,.08);border-color:rgba(64,128,255,.25);color:var(--blue2);}
+    .tic{width:30px;height:30px;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:.78rem;flex-shrink:0;}
+    /* Checklist */
+    .cl-wrap{background:var(--s1);border:1px solid var(--b1);border-radius:var(--r2);padding:1rem;}
+    .cl-item{display:flex;align-items:flex-start;gap:9px;padding:8px 0;border-bottom:1px solid var(--b1);}
+    .cl-item:last-child{border:none;}
+    .cb{width:18px;height:18px;border-radius:5px;border:1.5px solid var(--b2);cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .18s;margin-top:1px;}
+    .cb.on{background:var(--green);border-color:var(--green);}
+    .cb.on::after{content:'✓';color:#fff;font-size:.65rem;font-weight:900;}
+    .cl-text{font-size:.82rem;line-height:1.5;}
+    /* Q&A */
+    .qa-card{background:var(--s2);border-radius:var(--r2);padding:1.15rem;margin-bottom:.75rem;border:1px solid var(--b1);}
+    .qa-q{font-weight:700;font-size:.88rem;display:flex;gap:9px;margin-bottom:.5rem;}
+    .qa-num{font-family:var(--font-d);font-weight:800;background:var(--ga);-webkit-background-clip:text;-webkit-text-fill-color:transparent;flex-shrink:0;}
+    .qa-a{color:var(--t2);font-size:.82rem;line-height:1.68;border-top:1px solid var(--b1);padding-top:.65rem;display:none;}
+    .qa-tog{background:none;border:none;color:var(--blue2);font-size:.76rem;font-weight:700;cursor:pointer;font-family:var(--font-b);padding:0;margin-top:.4rem;}
+    .iv-title{font-family:var(--font-d);font-size:1.05rem;font-weight:700;margin-bottom:1rem;color:var(--blue2);}
+    @media(max-width:900px){.g2{grid-template-columns:1fr;}}
+    @media(max-width:600px){nav{padding:0 1rem;}.nb span{display:none;}.inner{padding:1.25rem 1rem 3rem;}}
+  </style>
+</head>
+<body>
+<nav>
+  <a class="logo" href="career_page_hero.html"><div class="lp"></div>LifeCraft</a>
+  <div class="nl">
+    <a class="nb" href="career_page_hero.html"><i class="fas fa-house"></i><span>Home</span></a>
+    <a class="nb" href="resume_builder.html"><i class="fas fa-file-alt"></i><span>Builder</span></a>
+    <a class="nb" href="ats_analyzer.html"><i class="fas fa-chart-bar"></i><span>ATS</span></a>
+    <a class="nb" href="skill_gap.html"><i class="fas fa-brain"></i><span>Skills</span></a>
+    <a class="nb active" href="interview_prep.html"><i class="fas fa-comments"></i><span>Interview</span></a>
+    <a class="nb" href="career_guidance.html"><i class="fas fa-map"></i><span>Roadmap</span></a>
+    <a class="nb" href="connect.html"><i class="fas fa-envelope"></i><span>Connect</span></a>
+  </div>
+</nav>
+<div class="page"><div class="inner">
+  <div class="ey">Step 04</div>
+  <div class="ptitle">Interview <span>Prep Guide</span></div>
+  <div class="psub">Field-specific Q&A banks with detailed model answers. Track your readiness with a prep checklist.</div>
+  <div class="g2">
+    <div>
+      <div class="lbl">Select Field</div>
+      <div class="tlist" id="tlist">
+        <button class="tbtn active" data-t="web" onclick="pick(this)"><div class="tic" style="background:rgba(64,128,255,.12);color:var(--blue2)"><i class="fas fa-globe"></i></div><div><strong style="font-size:.82rem;display:block">Web Development</strong><span style="font-size:.72rem;color:var(--t3)">Frontend & Backend</span></div></button>
+        <button class="tbtn" data-t="data" onclick="pick(this)"><div class="tic" style="background:rgba(34,212,238,.12);color:var(--cyan)"><i class="fas fa-chart-line"></i></div><div><strong style="font-size:.82rem;display:block">Data Science</strong><span style="font-size:.72rem;color:var(--t3)">ML & Analytics</span></div></button>
+        <button class="tbtn" data-t="cloud" onclick="pick(this)"><div class="tic" style="background:rgba(245,158,11,.12);color:var(--amber)"><i class="fas fa-cloud"></i></div><div><strong style="font-size:.82rem;display:block">Cloud Engineering</strong><span style="font-size:.72rem;color:var(--t3)">AWS / Azure / GCP</span></div></button>
+        <button class="tbtn" data-t="ai" onclick="pick(this)"><div class="tic" style="background:rgba(124,92,248,.12);color:#a78bfa"><i class="fas fa-robot"></i></div><div><strong style="font-size:.82rem;display:block">AI / ML Engineer</strong><span style="font-size:.72rem;color:var(--t3)">Deep Learning</span></div></button>
+        <button class="tbtn" data-t="security" onclick="pick(this)"><div class="tic" style="background:rgba(244,63,94,.12);color:var(--rose)"><i class="fas fa-shield-alt"></i></div><div><strong style="font-size:.82rem;display:block">Cybersecurity</strong><span style="font-size:.72rem;color:var(--t3)">Security Analyst</span></div></button>
+      </div>
+      <div class="lbl" style="margin-top:1.25rem">Prep Checklist</div>
+      <div class="cl-wrap">
+        <div id="cl"></div>
+        <div style="margin-top:.65rem;font-size:.78rem;color:var(--t3)">Progress: <span id="prog" style="color:var(--green);font-weight:800">0/0</span></div>
+      </div>
+    </div>
+    <div id="qa-panel"></div>
+  </div>
+</div></div>
+<script>
+const IV={
+  web:{title:"Web Development — Interview Guide",qs:[
+    {q:"Explain CSS Grid vs Flexbox — when do you use each?",a:"Flexbox is one-dimensional (row or column). Grid is two-dimensional. Use Flexbox for component-level layouts (nav bars, card rows). Use Grid for page-level layouts. They complement each other — Grid for macro layout, Flexbox inside components."},
+    {q:"What is the Virtual DOM and how does React use it?",a:"React keeps a lightweight copy of the DOM in memory. On state change, React diffs the new virtual DOM against the old and only updates changed nodes (reconciliation). This batching approach is far faster than directly touching the DOM on every change."},
+    {q:"Explain event loop, call stack, and microtask queue.",a:"Call stack executes code (LIFO). Async tasks offload to Web APIs. Callbacks enter the task queue when ready. The event loop moves tasks to the stack only when empty. Promises (microtasks) run before the next task — higher priority than the regular task queue."},
+    {q:"How does HTTP/2 differ from HTTP/1.1?",a:"HTTP/2 adds multiplexing (multiple requests over one TCP connection), header compression (HPACK), and server push. HTTP/1.1 opens a new connection per request. HTTP/2 dramatically reduces latency, especially on high-latency mobile connections."},
+    {q:"What are Core Web Vitals and how do you optimise LCP?",a:"LCP (Largest Contentful Paint): optimise with preloading critical assets, SSR, and CDN. FID/INP: minimise long tasks, use Web Workers. CLS (Layout Shift): set explicit dimensions on images and embeds, avoid inserting content above existing elements."}
+  ],cl:["Revise JS fundamentals (closures, hoisting, async/await)","Practice DOM manipulation without frameworks","Study REST API design patterns and HTTP methods","Build 1 complete full-stack project end-to-end","Review caching, CDN, and load balancing basics","Practice LeetCode: arrays, strings, and trees"]},
+  data:{title:"Data Science — Interview Guide",qs:[
+    {q:"Explain the bias-variance tradeoff.",a:"Bias = error from underfitting (model too simple). Variance = error from overfitting (model too complex). Manage with regularisation (L1/L2), cross-validation, and ensemble methods. The goal is the sweet spot of minimum total error."},
+    {q:"Difference between supervised, unsupervised, and RL?",a:"Supervised: labeled data, predict output (classification, regression). Unsupervised: no labels, find patterns (clustering, PCA). RL: agent learns via reward/penalty. Most real-world ML is supervised; unsupervised helps in EDA and dimensionality reduction."},
+    {q:"How do you handle 30% missing values in a key feature?",a:"Dropping rows only works if missing <5%. For 30%: analyze if MCAR, MAR, or MNAR. Use KNN imputation or iterative (MICE) imputation. Always impute AFTER train/test split to prevent data leakage."},
+    {q:"Metrics for a classifier with 95% class imbalance?",a:"Accuracy is misleading (predicting majority = 95%!). Use: Precision, Recall, F1 Score, AUC-ROC, Matthews Correlation Coefficient. For severe imbalance, F1 and MCC are most informative. Consider the business cost of false negatives vs false positives."},
+    {q:"Explain gradient descent and Adam optimizer.",a:"GD minimises loss by moving parameters toward steepest descent. Batch: all data — slow. SGD: one sample — noisy. Mini-batch: best of both. Adam: adaptive per-parameter learning rates = faster convergence, handles sparse gradients. Default choice for deep learning."}
+  ],cl:["Master Python: NumPy, Pandas, Matplotlib, Seaborn","Complete 5 end-to-end Kaggle projects","Study probability, distributions, hypothesis testing","Practice SQL for extraction and aggregation","Implement ML algorithms from scratch in code","Read papers on transformers and recent LLM architectures"]},
+  cloud:{title:"Cloud Engineering — Interview Guide",qs:[
+    {q:"Difference between IaaS, PaaS, and SaaS?",a:"IaaS: raw compute/storage — EC2, Azure VMs. You manage OS and up. PaaS: managed runtime — Elastic Beanstalk, App Engine. Manage code/data only. SaaS: full application — Gmail, Salesforce. The model determines your responsibility surface."},
+    {q:"Design a highly available, fault-tolerant AWS architecture.",a:"Multi-AZ EC2 behind an ALB in Auto Scaling Groups. Multi-AZ RDS. S3 for static assets. CloudFront CDN. Route 53 with health checks. SQS for async decoupling. The goal: eliminate every single point of failure systematically."},
+    {q:"Kubernetes: Pods, Services, Deployments, Ingress explained.",a:"Pod: smallest unit, 1+ containers sharing network/storage. Deployment: manages desired state, handles rolling updates. Service: stable network endpoint for Pods. Ingress: HTTP/S routing from external traffic to Services with configurable rules."},
+    {q:"Terraform vs CloudFormation — which and when?",a:"Terraform: cloud-agnostic, HCL language, huge provider ecosystem. CloudFormation: AWS-only, JSON/YAML, native AWS integration. For multi-cloud: Terraform. For pure AWS with managed services: either works. Terraform wins on flexibility."},
+    {q:"Walk me through a CI/CD pipeline for a microservices app.",a:"Code push → GitHub Actions → unit tests → Docker build + security scan (Trivy) → push to ECR → Terraform plan → Helm chart update → K8s rolling update → smoke tests on staging → manual approval → blue/green prod deploy → auto-rollback on failure."}
+  ],cl:["Earn AWS Solutions Architect Associate certification","Build a 3-tier app on AWS from scratch","Practice Terraform for common AWS resources","Learn Kubernetes: minikube locally, then EKS","Study VPCs, subnets, security groups, NAT gateway","Understand IAM roles, policies, and least-privilege"]},
+  ai:{title:"AI / ML Engineering — Interview Guide",qs:[
+    {q:"Explain the Transformer architecture and why it replaced RNNs.",a:"Transformers use self-attention to relate every token to every other in parallel. RNNs process sequentially — no parallelisation, vanishing gradients over long sequences. Transformers: fully parallelisable on GPUs, better long-range dependency capture, multi-head attention captures diverse relationships."},
+    {q:"Fine-tuning vs prompt engineering for LLMs — when to use each?",a:"Prompt engineering: craft inputs to guide model without changing weights — zero/few-shot, fast, zero compute cost. Fine-tuning: update weights on task-specific data — better accuracy, higher cost. LoRA/QLoRA adapts large models cheaply. Prompt engineer first, fine-tune if accuracy is insufficient."},
+    {q:"How do you reduce hallucinations in a production LLM?",a:"RAG grounds responses in retrieved documents. Lower temperature for conservative outputs. Constitutional AI and RLHF for alignment. Structured outputs (JSON mode). Citation prompting. Confidence scoring + 'I don't know' fallback. Monitor with LLM-based evaluation pipelines."},
+    {q:"Key components of a production ML pipeline?",a:"Feature store (no leakage), model registry (versioning), training pipeline (automated), CI/CD for ML (retrain on drift), serving layer (REST/batch/streaming), monitoring (data/model drift, latency), explainability (SHAP, LIME). Tools: MLflow, Kubeflow, SageMaker, Vertex AI."},
+    {q:"What is model quantization and when do you use it?",a:"Reduces precision (float32 → int8 or int4) to shrink model size and speed up inference with minimal accuracy loss. Use for edge deployment, reducing GPU memory, or faster production serving. 4-bit quantization (GPTQ, GGUF) runs 70B models on consumer hardware."}
+  ],cl:["Implement a transformer from scratch (Karpathy's nanoGPT)","Fine-tune a Hugging Face model on a custom dataset","Build a RAG application with LangChain or LlamaIndex","Study gradient descent variants and optimization theory","Learn MLflow for experiment tracking and registry","Deploy a model as REST API with FastAPI + Docker"]},
+  security:{title:"Cybersecurity — Interview Guide",qs:[
+    {q:"Explain the CIA Triad with real threat examples.",a:"Confidentiality: data accessible only to authorised parties. Threat: data breach, eavesdropping. Integrity: data accurate and unmodified. Threat: MITM attacks, SQL injection. Availability: systems accessible when needed. Threat: DDoS, ransomware. All security trade-offs involve these three."},
+    {q:"Walk me through OWASP Top 10 most critical risks.",a:"1) Broken Access Control. 2) Cryptographic failures. 3) Injection (SQL, XSS). 4) Insecure design. 5) Security misconfiguration. 6) Vulnerable components. 7) Auth failures. 8) Data integrity failures. 9) Logging failures. 10) SSRF. SQL injection and XSS remain the most exploited in practice."},
+    {q:"Methodology for a web application penetration test?",a:"1) Recon: passive (OSINT, DNS, Shodan) + active (Nmap). 2) Scanning: Nessus, Burp Suite. 3) Exploitation: within written scope. 4) Post-exploitation: assess impact, lateral movement. 5) Report: CVSS scores, steps to reproduce, remediation priority. Never exceed scope."},
+    {q:"Symmetric vs asymmetric encryption — when to use each?",a:"Symmetric: same key to encrypt/decrypt — AES-256. Fast, for bulk data. Problem: key distribution. Asymmetric: public/private key pair — RSA, ECC. Solves key distribution but slower. In practice: HTTPS uses asymmetric to exchange a symmetric session key, then AES for all traffic."},
+    {q:"SOC structure — Tier 1, 2, and 3 analyst differences?",a:"Tier 1: alert triage — monitoring SIEM dashboards, first response, escalation. Tier 2: incident response — investigate alerts, contain and remediate threats, threat hunting. Tier 3: advanced threats — forensics, malware reverse engineering, YARA/Sigma rule development, threat intelligence."}
+  ],cl:["Complete TryHackMe beginner learning path","Earn CompTIA Security+ or CEH certification","Practice on HackTheBox machines","Master networking fundamentals: TCP/IP, DNS, HTTP","Study OWASP Top 10 with hands-on labs (DVWA)","Learn SIEM tools: Splunk or Microsoft Sentinel"]}
+};
+let ckS={};
+function pick(btn){
+  document.querySelectorAll(".tbtn").forEach(b=>b.classList.remove("active"));btn.classList.add("active");
+  renderIV(btn.dataset.t);
+}
+function renderIV(t){
+  const d=IV[t]||IV.web;
+  if(!ckS[t])ckS[t]=new Array(d.cl.length).fill(false);
+  document.getElementById("qa-panel").innerHTML=`<div class="iv-title">${d.title}</div>`+d.qs.map((q,i)=>`<div class="qa-card"><div class="qa-q"><span class="qa-num">Q${i+1}.</span><span>${q.q}</span></div><button class="qa-tog" onclick="tog(this)">▶ Show Answer</button><div class="qa-a">${q.a}</div></div>`).join("");
+  document.getElementById("cl").innerHTML=d.cl.map((c,i)=>`<div class="cl-item"><div class="cb ${ckS[t][i]?'on':''}" onclick="tick('${t}',${i},this)"></div><div class="cl-text">${c}</div></div>`).join("");
+  updProg(t);
+}
+function tog(btn){const a=btn.nextElementSibling,s=a.style.display==="block";a.style.display=s?"none":"block";btn.textContent=s?"▶ Show Answer":"▼ Hide Answer";}
+function tick(t,i,el){ckS[t][i]=!ckS[t][i];el.classList.toggle("on");updProg(t);}
+function updProg(t){const s=ckS[t]||[];document.getElementById("prog").textContent=s.filter(Boolean).length+"/"+s.length;}
+renderIV("web");
+</script>
+</body>
+</html>

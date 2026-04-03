@@ -25,6 +25,7 @@ const allowedOrigins = [
   'http://localhost:5500',
   'http://127.0.0.1:3000',
   'http://localhost:3000',
+  'https://gamified-lifecraftai.vercel.app'
   // Add production domains later:
   // 'https://yourdomain.com'
 ];

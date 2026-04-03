@@ -1,1053 +1,152 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Career Guidance - Visual Roadmap</title>
-  
-  <!-- Mermaid.js CDN -->
-  <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
-  
-  <!-- Font Awesome for icons -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Career Roadmap — LifeCraft</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
   <style>
-    /* Dark Theme Styles */
-    :root {
-      --primary: #bb86fc;
-      --primary-dark: #9a67ea;
-      --secondary: #03dac6;
-      --secondary-dark: #01b3a0;
-      --background: #0f0f15;
-      --surface: #1a1a25;
-      --surface-light: #252535;
-      --text: #e0e0e0;
-      --text-secondary: #b0b0c0;
-      --text-tertiary: #8888a0;
-      --success: #4caf50;
-      --warning: #ff9800;
-      --error: #f44336;
-      --india-blue: #0077b6;
-      --india-orange: #ff9e6d;
-      --global-green: #4ade80;
-      --global-purple: #c084fc;
-      --card-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
-      --transition: all 0.3s ease;
-    }
-    
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-    
-    body {
-      background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
-      color: var(--text);
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      line-height: 1.6;
-      min-height: 100vh;
-      padding: 0;
-      background-attachment: fixed;
-    }
-    
-    .container {
-      max-width: 1400px;
-      margin: 0 auto;
-      padding: 2rem;
-    }
-    
-    header {
-      text-align: center;
-      margin-bottom: 2.5rem;
-      padding: 1.5rem 0;
-      position: relative;
-    }
-    
-    header::after {
-      content: "";
-      position: absolute;
-      bottom: 0;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 120px;
-      height: 4px;
-      background: linear-gradient(90deg, var(--india-orange), var(--global-green));
-      border-radius: 2px;
-    }
-    
-    h1 {
-      color: var(--primary);
-      margin-bottom: 0.8rem;
-      font-weight: 800;
-      font-size: 2.8rem;
-      letter-spacing: 1.2px;
-      text-shadow: 0 0 15px rgba(187, 134, 252, 0.3);
-    }
-    
-    .subtitle {
-      color: var(--text-secondary);
-      font-size: 1.2rem;
-      max-width: 700px;
-      margin: 0 auto 1.5rem;
-      font-weight: 300;
-    }
-    
-    .badges {
-      display: flex;
-      justify-content: center;
-      gap: 1rem;
-      margin-top: 1rem;
-    }
-    
-    .badge {
-      display: inline-flex;
-      align-items: center;
-      padding: 0.3rem 0.8rem;
-      border-radius: 20px;
-      font-size: 0.9rem;
-      font-weight: 600;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-    }
-    
-    .india-badge {
-      background: linear-gradient(90deg, var(--india-blue), var(--india-orange));
-      color: white;
-    }
-    
-    .global-badge {
-      background: linear-gradient(90deg, var(--global-green), var(--global-purple));
-      color: #0f172a;
-    }
-    
-    .main-content {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 2rem;
-    }
-    
-    @media (min-width: 1200px) {
-      .main-content {
-        grid-template-columns: 1fr 1fr;
-      }
-    }
-    
-    .card {
-      background: var(--surface);
-      border-radius: 20px;
-      padding: 2rem;
-      box-shadow: var(--card-shadow);
-      transition: var(--transition);
-      backdrop-filter: blur(10px);
-      border: 1px solid rgba(255, 255, 255, 0.05);
-    }
-    
-    .card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5);
-    }
-    
-    .card-header {
-      display: flex;
-      align-items: center;
-      margin-bottom: 1.5rem;
-      padding-bottom: 1rem;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    }
-    
-    .card-header i {
-      font-size: 1.8rem;
-      margin-right: 1rem;
-      background: linear-gradient(135deg, var(--primary), var(--secondary));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-    
-    .card-header h2 {
-      font-size: 1.8rem;
-      color: var(--primary);
-    }
-    
-    select {
-      background-color: var(--surface-light);
-      border: none;
-      padding: 0.9rem 1.2rem;
-      border-radius: 12px;
-      color: var(--text);
-      font-size: 1.15rem;
-      width: 100%;
-      box-shadow: 0 0 15px rgba(187, 134, 252, 0.2);
-      cursor: pointer;
-      margin-bottom: 1.5rem;
-      transition: var(--transition);
-      font-weight: 600;
-      appearance: none;
-      background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23bb86fc' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
-      background-repeat: no-repeat;
-      background-position: right 1.2rem center;
-      background-size: 18px;
-      padding-right: 3.5rem;
-    }
-    
-    select:hover {
-      box-shadow: 0 0 20px rgba(187, 134, 252, 0.4);
-    }
-    
-    select:focus {
-      outline: none;
-      box-shadow: 0 0 0 3px rgba(187, 134, 252, 0.5);
-    }
-    
-    #roadmap {
-      background-color: var(--surface-light);
-      border-radius: 15px;
-      padding: 1.5rem;
-      width: 100%;
-      box-shadow: 0 0 30px rgba(98, 0, 234, 0.2);
-      min-height: 400px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border: 1px solid rgba(255, 255, 255, 0.05);
-    }
-    
-    #description {
-      margin-top: 1.5rem;
-      font-size: 1.15rem;
-      color: var(--text-secondary);
-      line-height: 1.7;
-      text-align: center;
-      padding: 1.5rem;
-      background: rgba(30, 30, 30, 0.7);
-      border-radius: 15px;
-      border: 1px solid rgba(255, 255, 255, 0.05);
-    }
-    
-    /* Stats section */
-    .stats-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
-      gap: 1.2rem;
-      margin-top: 1.5rem;
-    }
-    
-    .stat-card {
-      background: rgba(30, 30, 30, 0.6);
-      border-radius: 12px;
-      padding: 1.2rem;
-      text-align: center;
-      border: 1px solid rgba(255, 255, 255, 0.05);
-      transition: var(--transition);
-    }
-    
-    .stat-card:hover {
-      transform: translateY(-3px);
-      border-color: var(--primary);
-    }
-    
-    .stat-value {
-      font-size: 2rem;
-      font-weight: 700;
-      color: var(--secondary);
-      margin-bottom: 0.5rem;
-    }
-    
-    .stat-label {
-      font-size: 0.9rem;
-      color: var(--text-tertiary);
-    }
-    
-    /* Market Insights Section */
-    .market-insights {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 1.5rem;
-      margin: 1.5rem 0;
-    }
-    
-    @media (min-width: 768px) {
-      .market-insights {
-        grid-template-columns: 1fr 1fr;
-      }
-    }
-    
-    .india-data {
-      background: linear-gradient(135deg, rgba(0, 119, 182, 0.1), rgba(255, 158, 109, 0.1));
-      border-left: 3px solid var(--india-blue);
-      padding: 1.2rem;
-      border-radius: 0 10px 10px 0;
-    }
-    
-    .global-data {
-      background: linear-gradient(135deg, rgba(74, 222, 128, 0.1), rgba(192, 132, 252, 0.1));
-      border-left: 3px solid var(--global-green);
-      padding: 1.2rem;
-      border-radius: 0 10px 10px 0;
-    }
-    
-    .india-data h3, .global-data h3 {
-      margin-bottom: 0.5rem;
-      display: flex;
-      align-items: center;
-    }
-    
-    .india-data h3 {
-      color: var(--india-blue);
-    }
-    
-    .global-data h3 {
-      color: var(--global-green);
-    }
-    
-    /* Skills section */
-    .skills-container {
-      margin-top: 1.5rem;
-    }
-    
-    .skills-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-      gap: 1rem;
-      margin-top: 1rem;
-    }
-    
-    .skill-item {
-      background: rgba(30, 30, 30, 0.5);
-      border-radius: 10px;
-      padding: 0.8rem;
-      text-align: center;
-      transition: var(--transition);
-      border: 1px solid rgba(255, 255, 255, 0.05);
-    }
-    
-    .skill-item:hover {
-      transform: translateY(-2px);
-      border-color: var(--secondary);
-    }
-    
-    .skill-item i {
-      color: var(--secondary);
-      margin-bottom: 0.5rem;
-      font-size: 1.2rem;
-    }
-    
-    /* Resources section */
-    .resources-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 1.5rem;
-      margin-top: 1.5rem;
-    }
-    
-    .resource-card {
-      background: rgba(30, 30, 30, 0.6);
-      border-radius: 12px;
-      padding: 1.5rem;
-      border: 1px solid rgba(255, 255, 255, 0.05);
-      transition: var(--transition);
-    }
-    
-    .resource-card:hover {
-      transform: translateY(-3px);
-      border-color: rgba(187, 134, 252, 0.3);
-    }
-    
-    .resource-card h4 {
-      color: var(--primary);
-      margin-bottom: 0.8rem;
-      display: flex;
-      align-items: center;
-    }
-    
-    .resource-card h4 i {
-      margin-right: 0.8rem;
-    }
-    
-    .resource-card p {
-      color: var(--text-secondary);
-      font-size: 0.95rem;
-    }
-    
-    /* Future Scope Section */
-    .future-scope {
-      grid-column: 1 / -1;
-      margin-top: 1rem;
-    }
-    
-    .scope-tabs {
-      display: flex;
-      margin-bottom: 1.5rem;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    }
-    
-    .scope-tab {
-      padding: 0.8rem 1.5rem;
-      background: none;
-      border: none;
-      color: var(--text-tertiary);
-      font-size: 1.1rem;
-      cursor: pointer;
-      transition: var(--transition);
-      position: relative;
-    }
-    
-    .scope-tab.active {
-      color: var(--primary);
-    }
-    
-    .scope-tab.active::after {
-      content: "";
-      position: absolute;
-      bottom: -1px;
-      left: 0;
-      width: 100%;
-      height: 3px;
-      background: var(--primary);
-    }
-    
-    .scope-content {
-      display: none;
-    }
-    
-    .scope-content.active {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 1.5rem;
-    }
-    
-    .scope-card {
-      background: rgba(30, 30, 30, 0.6);
-      border-radius: 12px;
-      padding: 1.5rem;
-      border: 1px solid rgba(255, 255, 255, 0.05);
-      transition: var(--transition);
-    }
-    
-    .scope-card:hover {
-      transform: translateY(-3px);
-    }
-    
-    .india-scope .scope-card:hover {
-      border-color: var(--india-orange);
-    }
-    
-    .global-scope .scope-card:hover {
-      border-color: var(--global-green);
-    }
-    
-    .scope-card h4 {
-      margin-bottom: 0.8rem;
-      display: flex;
-      align-items: center;
-    }
-    
-    .india-scope .scope-card h4 {
-      color: var(--india-orange);
-    }
-    
-    .global-scope .scope-card h4 {
-      color: var(--global-green);
-    }
-    
-    .scope-card h4 i {
-      margin-right: 0.8rem;
-    }
-    
-    .scope-card p {
-      color: var(--text-secondary);
-      font-size: 0.95rem;
-    }
-    
-    /* Footer */
-    footer {
-      margin-top: 3rem;
-      color: var(--text-tertiary);
-      font-size: 0.95rem;
-      padding: 2rem 0 1.5rem;
-      text-align: center;
-      border-top: 1px solid rgba(255, 255, 255, 0.05);
-    }
-    
-    .footer-links {
-      display: flex;
-      justify-content: center;
-      gap: 1.5rem;
-      margin-top: 1rem;
-      flex-wrap: wrap;
-    }
-    
-    .footer-links a {
-      color: var(--text-tertiary);
-      text-decoration: none;
-      transition: var(--transition);
-    }
-    
-    .footer-links a:hover {
-      color: var(--primary);
-    }
-    
-    /* Animation for roadmap nodes */
-    .mermaid svg {
-      width: 100%;
-      height: auto;
-    }
-    
-    /* Responsive adjustments */
-    @media (max-width: 768px) {
-      h1 {
-        font-size: 2.2rem;
-      }
-      
-      .container {
-        padding: 1.5rem;
-      }
-      
-      .card {
-        padding: 1.5rem;
-      }
-      
-      .stats-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
-    }
-    
-    /* Loading animation */
-    .loading {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 400px;
-    }
-    
-    .spinner {
-      width: 40px;
-      height: 40px;
-      border: 4px solid rgba(187, 134, 252, 0.3);
-      border-top: 4px solid var(--primary);
-      border-radius: 50%;
-      animation: spin 1s linear infinite;
-    }
-    
-    @keyframes spin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
-    }
+    :root{--bg:#060912;--s1:#0f1828;--s2:#162034;--s3:#1d2a40;--b1:rgba(255,255,255,0.06);--b2:rgba(255,255,255,0.11);--t1:#e8f0ff;--t2:#8da4c8;--t3:#4e6280;--blue:#4080ff;--blue2:#7aaeff;--violet:#7c5cf8;--cyan:#22d4ee;--amber:#f59e0b;--rose:#f43f5e;--green:#10b981;--ga:linear-gradient(135deg,#4080ff,#7c5cf8);--ge:linear-gradient(135deg,#10b981,#22d4ee);--font-d:'Syne',sans-serif;--font-b:'DM Sans',sans-serif;--r:12px;--r2:18px;}
+    *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+    body{font-family:var(--font-b);background:var(--bg);color:var(--t1);min-height:100vh;}
+    body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;background:radial-gradient(ellipse 900px 700px at 15% 5%,rgba(64,128,255,0.07) 0%,transparent 55%),radial-gradient(ellipse 700px 500px at 85% 85%,rgba(124,92,248,0.07) 0%,transparent 55%);}
+    nav{position:sticky;top:0;z-index:999;display:flex;align-items:center;justify-content:space-between;padding:0 2.5rem;height:66px;background:rgba(6,9,18,0.88);backdrop-filter:blur(28px);border-bottom:1px solid var(--b1);}
+    nav::after{content:'';position:absolute;bottom:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(64,128,255,.4) 40%,rgba(124,92,248,.4) 60%,transparent);}
+    .logo{font-family:var(--font-d);font-size:1.5rem;font-weight:800;background:var(--ga);-webkit-background-clip:text;-webkit-text-fill-color:transparent;display:flex;align-items:center;gap:10px;text-decoration:none;}
+    .lp{width:9px;height:9px;border-radius:50%;background:var(--ga);animation:lp 2.4s ease-in-out infinite;}
+    @keyframes lp{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.6)}}
+    .nl{display:flex;gap:4px;}
+    .nb{display:flex;align-items:center;gap:7px;padding:8px 16px;border-radius:var(--r);background:none;border:none;cursor:pointer;color:var(--t3);font-family:var(--font-b);font-size:.82rem;font-weight:500;transition:all .18s;text-decoration:none;white-space:nowrap;}
+    .nb:hover{color:var(--t1);background:rgba(255,255,255,.06);}
+    .nb.active{color:var(--blue2);background:rgba(64,128,255,.1);border:1px solid rgba(64,128,255,.18);}
+    .nb i{font-size:.75rem;}
+    .page{position:relative;z-index:1;}
+    .inner{max-width:1200px;margin:0 auto;padding:2rem 2rem 4rem;}
+    .ey{font-size:.73rem;font-weight:800;text-transform:uppercase;letter-spacing:.12em;color:var(--green);margin-bottom:.4rem;}
+    .ptitle{font-family:var(--font-d);font-size:1.8rem;font-weight:800;letter-spacing:-0.025em;margin-bottom:.3rem;}
+    .ptitle span{background:var(--ge);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+    .psub{color:var(--t2);font-size:.88rem;margin-bottom:1.75rem;}
+    .g2{display:grid;grid-template-columns:280px 1fr;gap:1.25rem;}
+    .lbl{font-size:.72rem;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:var(--t3);margin-bottom:.65rem;}
+    .copts{display:flex;flex-direction:column;gap:6px;}
+    .copt{display:flex;align-items:center;gap:11px;padding:12px;border-radius:var(--r);background:var(--s1);border:1px solid var(--b1);cursor:pointer;transition:all .18s;}
+    .copt:hover,.copt.active{border-color:rgba(64,128,255,.3);background:rgba(64,128,255,.06);}
+    .c-ic{width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:.85rem;flex-shrink:0;}
+    .c-tx h4{font-size:.83rem;font-weight:700;}
+    .c-tx p{font-size:.73rem;color:var(--t3);}
+    .card{background:var(--s1);border:1px solid var(--b1);border-radius:var(--r2);padding:1.5rem;}
+    .card+.card{margin-top:1.1rem;}
+    .ct{font-family:var(--font-d);font-size:.9rem;font-weight:700;margin-bottom:1rem;}
+    .sal-row{display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:1px solid var(--b1);}
+    .sal-row:last-child{border:none;}
+    .sal-l{font-size:.78rem;color:var(--t3);}
+    .sal-v{font-size:.85rem;font-weight:800;color:var(--blue2);}
+    /* Roadmap steps */
+    .rm-steps{display:flex;flex-direction:column;}
+    .rm-step{display:flex;gap:14px;position:relative;}
+    .rm-step:not(:last-child)::after{content:'';position:absolute;left:17px;top:38px;width:2px;bottom:-6px;background:linear-gradient(to bottom,rgba(64,128,255,.4),transparent);}
+    .sd{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:.75rem;position:relative;z-index:1;}
+    .sd-done{background:var(--ga);box-shadow:0 0 12px rgba(64,128,255,.4);}
+    .sd-active{background:var(--ga);box-shadow:0 0 0 4px rgba(64,128,255,.2),0 0 12px rgba(64,128,255,.3);}
+    .sd-pend{background:var(--s3);border:2px solid var(--b2);}
+    .sc{background:var(--s2);border:1px solid var(--b1);border-radius:var(--r);padding:.9rem 1rem;flex:1;margin-bottom:10px;}
+    .sc-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:3px;}
+    .sc h4{font-size:.85rem;font-weight:700;}
+    .sc p{font-size:.78rem;color:var(--t3);line-height:1.5;}
+    .stags{display:flex;flex-wrap:wrap;gap:4px;margin-top:.5rem;}
+    .stag{font-size:.68rem;padding:2px 7px;border-radius:8px;background:var(--s3);color:var(--t3);}
+    .tbadge{font-size:.68rem;font-weight:800;padding:2px 8px;border-radius:10px;background:rgba(64,128,255,.1);color:var(--blue2);white-space:nowrap;}
+    .ins-g{display:grid;grid-template-columns:1fr 1fr;gap:.75rem;margin-top:1rem;}
+    .ins-b{background:var(--s2);border-radius:var(--r);padding:.9rem;border:1px solid var(--b1);}
+    .ins-b h5{font-size:.75rem;font-weight:800;color:var(--blue2);margin-bottom:.3rem;text-transform:uppercase;letter-spacing:.04em;}
+    .ins-b p{font-size:.76rem;color:var(--t3);line-height:1.5;}
+    .pill{display:inline-flex;padding:3px 9px;border-radius:20px;font-size:.7rem;font-weight:700;}
+    .pb{background:rgba(64,128,255,.12);color:var(--blue2);border:1px solid rgba(64,128,255,.2);}
+    @media(max-width:900px){.g2{grid-template-columns:1fr;}}
+    @media(max-width:600px){nav{padding:0 1rem;}.nb span{display:none;}.inner{padding:1.25rem 1rem 3rem;}}
   </style>
 </head>
 <body>
-  <div class="container">
-    <header>
-      <h1>Career Guidance - Visual Roadmap</h1>
-      <p class="subtitle">Explore high-growth careers with detailed roadmaps, salary insights, and future opportunities in India and globally</p>
-      <div class="badges">
-        <div class="badge india-badge"><i class="fas fa-flag"></i>  _India Focus</div>
-        <div class="badge global-badge"><i class="fas fa-globe"></i>  _Global Perspective</div>
+<nav>
+  <a class="logo" href="career_page_hero.html"><div class="lp"></div>LifeCraft</a>
+  <div class="nl">
+    <a class="nb" href="career_page_hero.html"><i class="fas fa-house"></i><span>Home</span></a>
+    <a class="nb" href="resume_builder.html"><i class="fas fa-file-alt"></i><span>Builder</span></a>
+    <a class="nb" href="ats_analyzer.html"><i class="fas fa-chart-bar"></i><span>ATS</span></a>
+    <a class="nb" href="skill_gap.html"><i class="fas fa-brain"></i><span>Skills</span></a>
+    <a class="nb" href="interview_prep.html"><i class="fas fa-comments"></i><span>Interview</span></a>
+    <a class="nb active" href="career_guidance.html"><i class="fas fa-map"></i><span>Roadmap</span></a>
+    <a class="nb" href="connect.html"><i class="fas fa-envelope"></i><span>Connect</span></a>
+  </div>
+</nav>
+<div class="page"><div class="inner">
+  <div class="ey">Step 05</div>
+  <div class="ptitle">Career <span>Roadmap</span></div>
+  <div class="psub">Visual step-by-step paths for 6 tech careers — milestones, timelines, salary benchmarks, and key skills.</div>
+  <div class="g2">
+    <div>
+      <div class="lbl">Career Path</div>
+      <div class="copts" id="copts">
+        <div class="copt active" data-c="web" onclick="pick(this)"><div class="c-ic" style="background:rgba(64,128,255,.12);color:var(--blue2)"><i class="fas fa-globe"></i></div><div class="c-tx"><h4>Web Developer</h4><p>Frontend & Backend</p></div></div>
+        <div class="copt" data-c="data" onclick="pick(this)"><div class="c-ic" style="background:rgba(34,212,238,.12);color:var(--cyan)"><i class="fas fa-chart-line"></i></div><div class="c-tx"><h4>Data Scientist</h4><p>ML & Analytics</p></div></div>
+        <div class="copt" data-c="cloud" onclick="pick(this)"><div class="c-ic" style="background:rgba(245,158,11,.12);color:var(--amber)"><i class="fas fa-cloud"></i></div><div class="c-tx"><h4>Cloud Engineer</h4><p>AWS / Azure / GCP</p></div></div>
+        <div class="copt" data-c="ai" onclick="pick(this)"><div class="c-ic" style="background:rgba(124,92,248,.12);color:#a78bfa"><i class="fas fa-robot"></i></div><div class="c-tx"><h4>AI/ML Engineer</h4><p>Deep Learning</p></div></div>
+        <div class="copt" data-c="security" onclick="pick(this)"><div class="c-ic" style="background:rgba(244,63,94,.12);color:var(--rose)"><i class="fas fa-shield-alt"></i></div><div class="c-tx"><h4>Cybersecurity</h4><p>Security Analyst</p></div></div>
+        <div class="copt" data-c="design" onclick="pick(this)"><div class="c-ic" style="background:rgba(16,185,129,.12);color:var(--green)"><i class="fas fa-pen-nib"></i></div><div class="c-tx"><h4>UI/UX Designer</h4><p>Product Design</p></div></div>
       </div>
-    </header>
-    
-    <div class="main-content">
-      <!-- Left Column: Roadmap and Description -->
-      <div class="card">
-        <div class="card-header">
-          <i class="fas fa-road"></i>
-          <h2>Career Roadmap</h2>
-        </div>
-        
-        <select id="careerSelect" aria-label="Select your career path">
-          <option value="developer">Software Developer</option>
-          <option value="dataScientist">Data Scientist</option>
-          <option value="designer">UI/UX Designer</option>
-          <option value="cybersecurity">Cybersecurity Analyst</option>
-          <option value="cloudEngineer">Cloud Engineer</option>
-          <option value="aiEngineer">AI/ML Engineer</option>
-        </select>
-        
-        <div id="roadmap" class="mermaid">
-          <div class="loading">
-            <div class="spinner"></div>
-          </div>
-        </div>
-        
-        <p id="description" aria-live="polite"></p>
-      </div>
-      
-      <!-- Right Column: Career Details -->
-      <div class="card">
-        <div class="card-header">
-          <i class="fas fa-chart-line"></i>
-          <h2>Career Insights</h2>
-        </div>
-        
-        <div class="stats-grid">
-          <div class="stat-card">
-            <div class="stat-value" id="salary">-</div>
-            <div class="stat-label">Avg. Salary</div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-value" id="growth">-</div>
-            <div class="stat-label">Job Growth</div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-value" id="demand">-</div>
-            <div class="stat-label">Demand Level</div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-value" id="timeline">-</div>
-            <div class="stat-label">Timeline</div>
-          </div>
-        </div>
-        
-        <div class="market-insights">
-          <div class="india-data">
-            <h3><i class="fas fa-map-marker-alt"></i> India Market Insights</h3>
-            <p id="india-insights">India's IT sector is projected to grow at 8-10% annually, with over 4 million new tech jobs expected by 2025.</p>
-          </div>
-          <div class="global-data">
-            <h3><i class="fas fa-globe-americas"></i> Global Market Insights</h3>
-            <p id="global-insights">The global tech industry is projected to grow at 5-7% annually, with AI and cybersecurity leading the demand.</p>
-          </div>
-        </div>
-        
-        <div class="skills-container">
-          <h3 style="color: var(--primary); margin: 1.5rem 0 1rem;">Key Skills</h3>
-          <div class="skills-grid" id="skills-list"></div>
-        </div>
-        
-        <h3 style="color: var(--primary); margin: 1.5rem 0 1rem;">Recommended Resources</h3>
-        <div class="resources-grid" id="resources-list"></div>
-      </div>
-      
-      <!-- Future Scope Section -->
-      <div class="card future-scope">
-        <div class="card-header">
-          <i class="fas fa-binoculars"></i>
-          <h2>Future Scope</h2>
-        </div>
-        
-        <div class="scope-tabs">
-          <button class="scope-tab active" data-target="india-scope">India Focus</button>
-          <button class="scope-tab" data-target="global-scope">Global Perspective</button>
-        </div>
-        
-        <div id="india-scope" class="scope-content active">
-          <!-- India scope content will be populated here -->
-        </div>
-        
-        <div id="global-scope" class="scope-content">
-          <!-- Global scope content will be populated here -->
-        </div>
+      <div class="card" style="margin-top:1rem;">
+        <div class="lbl">Salary Benchmark</div>
+        <div id="sal"></div>
       </div>
     </div>
-    
-    <footer>
-      <p>© 2025 Lifecraft Career Guidance | Empowering Your Professional Journey</p>
-      <div class="footer-links">
-        <a href="#"><i class="fas fa-book"></i> Learning Paths</a>
-        <a href="#"><i class="fas fa-users"></i> Community</a>
-        <a href="#"><i class="fas fa-envelope"></i> Contact Us</a>
-        <a href="#"><i class="fas fa-shield-alt"></i> Privacy Policy</a>
-        <a href="#"><i class="fas fa-graduation-cap"></i> Government Schemes</a>
-        <a href="#"><i class="fas fa-industry"></i> Industry Partners</a>
+    <div>
+      <div class="card" style="margin-bottom:1rem;">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;">
+          <div id="rm-title" style="font-family:var(--font-d);font-size:1rem;font-weight:700;"></div>
+          <span id="rm-time" class="pill pb"></span>
+        </div>
+        <div class="rm-steps" id="rm-steps"></div>
       </div>
-    </footer>
+      <div class="card">
+        <div class="ct"><i class="fas fa-lightbulb" style="color:var(--amber);margin-right:6px"></i>Market Insights</div>
+        <div class="ins-g" id="rm-ins"></div>
+        <div style="height:1px;background:var(--b1);margin:1rem 0;"></div>
+        <div class="ct" style="margin-bottom:.65rem;"><i class="fas fa-tools" style="color:var(--blue2);margin-right:6px"></i>Key Skills</div>
+        <div style="display:flex;flex-wrap:wrap;gap:5px;" id="rm-skills"></div>
+      </div>
+    </div>
   </div>
-
-  <script>
-    // Mermaid initialization with dark theme colors
-    mermaid.initialize({
-      startOnLoad: false,
-      theme: "dark",
-      themeVariables: {
-        background: "#1a1a25",
-        primaryColor: "#bb86fc",
-        primaryBorderColor: "#3700b3",
-        primaryTextColor: "#e0e0e0",
-        secondaryColor: "#03dac6",
-        secondaryBorderColor: "#018786",
-        secondaryTextColor: "#000000",
-        lineColor: "#03dac6",
-        textColor: "#b0b0c0",
-        nodeBorder: "#444444",
-        fontSize: "14px",
-        edgeLabelBackground: "#1a1a25"
-      },
-    });
-
-    // Enhanced career data with India and Global information
-    const careerData = {
-      developer: {
-        roadmap: `
-          graph TD
-          A["Learn Programming\nBasics (Python/JS)"] --> B["Build Projects\nwith HTML/CSS"]
-          B --> C["Master Frameworks\n(React, Angular, Vue)"]
-          C --> D["Learn Backend\n(Node.js, Django)"]
-          D --> E["Get Internship\nat Startup"]
-          E --> F["Full-time Job\nat Tech Company"]
-          style A fill:#bb86fc,stroke:#3700b3,stroke-width:2px,color:#000
-          style F fill:#03dac6,stroke:#018786,stroke-width:2px,color:#000
-          classDef milestone fill:#4a00e0,stroke:#8e24aa,color:#fff;
-          class E milestone
-        `,
-        description: "Start with programming fundamentals, build projects to apply your skills, master popular frameworks, pursue internships, and secure a full-time developer job at tech companies.",
-        salary: "₹6-15 LPA / $70k-120k",
-        growth: "22% (2023-2028)",
-        demand: "Very High",
-        timeline: "12-24 months",
-        indiaInsights: "India has over 5,000 tech startups creating massive demand for developers. Tier-2/3 cities are emerging as new tech hubs with companies like Zoho, Freshworks, and Chargebee.",
-        globalInsights: "Global demand for developers remains strong with remote work opportunities. Specialized skills in cloud and AI integration are highly valued across markets.",
-        skills: [
-          {name: "JavaScript", icon: "fab fa-js"},
-          {name: "React", icon: "fab fa-react"},
-          {name: "Node.js", icon: "fab fa-node-js"},
-          {name: "Python", icon: "fab fa-python"},
-          {name: "Git", icon: "fab fa-git-alt"},
-          {name: "REST APIs", icon: "fas fa-plug"}
-        ],
-        resources: [
-          { name: "freeCodeCamp", type: "Interactive Learning", url: "#" },
-          { name: "GeeksforGeeks", type: "Indian Platform", url: "#" },
-          { name: "MDN Web Docs", type: "Global Documentation", url: "#" },
-          { name: "The Odin Project", type: "Full Curriculum", url: "#" }
-        ],
-        indiaScope: [
-          { title: "Emerging Tech Hubs", desc: "Tier-2 cities like Jaipur, Indore, and Coimbatore are becoming major tech centers with 30% lower living costs than metros." },
-          { title: "Product Companies", desc: "Shift from service-based to product-based companies offering 20-40% higher salaries and better work-life balance." },
-          { title: "Remote Opportunities", desc: "Global remote jobs paying in USD are increasingly accessible to Indian developers with strong portfolios." }
-        ],
-        globalScope: [
-          { title: "Remote Work Revolution", desc: "Global companies are embracing remote work, allowing developers to work from anywhere with competitive international salaries." },
-          { title: "Specialized Frameworks", desc: "Demand for expertise in emerging frameworks like Svelte, SolidJS, and Qwik is growing rapidly in Western markets." },
-          { title: "Web3 Development", desc: "Blockchain and decentralized application development is creating new high-paying opportunities in the US and Europe." }
-        ]
-      },
-      dataScientist: {
-        roadmap: `
-          graph TD
-          A["Learn Statistics &\nPython/R"] --> B["Work on Datasets\n(Kaggle, Govt Data)"]
-          B --> C["Master ML Algorithms\n& Deep Learning"]
-          C --> D["Big Data Tools\n(Spark, Hadoop)"]
-          D --> E["Get Internship\nat Analytics Firm"]
-          E --> F["Full-time Job\nin BFSI/E-commerce"]
-          style A fill:#bb86fc,stroke:#3700b3,stroke-width:2px,color:#000
-          style F fill:#03dac6,stroke:#018786,stroke-width:2px,color:#000
-          classDef milestone fill:#4a00e0,stroke:#8e24aa,color:#fff;
-          class E milestone
-        `,
-        description: "Learn statistics and Python, work on real datasets, master machine learning, gain experience with big data tools, and land a data science role in BFSI or e-commerce sectors.",
-        salary: "₹8-20 LPA / $90k-150k",
-        growth: "36% (2023-2028)",
-        demand: "High",
-        timeline: "18-30 months",
-        indiaInsights: "India is the 2nd largest analytics market globally. BFSI sector alone will create 1.2 million data science jobs by 2025. Government initiatives like IndiaAI are boosting adoption.",
-        globalInsights: "Global demand for data scientists is surging, especially in healthcare, finance, and retail sectors. Companies are investing heavily in AI-driven decision making.",
-        skills: [
-          {name: "Python", icon: "fab fa-python"},
-          {name: "SQL", icon: "fas fa-database"},
-          {name: "Machine Learning", icon: "fas fa-brain"},
-          {name: "TensorFlow", icon: "fab fa-tensorflow"},
-          {name: "Tableau", icon: "fas fa-chart-bar"},
-          {name: "Big Data", icon: "fas fa-server"}
-        ],
-        resources: [
-          { name: "Kaggle", type: "Competitions", url: "#" },
-          { name: "Analytics Vidhya", type: "Indian Community", url: "#" },
-          { name: "Coursera ML Specialization", type: "Global Courses", url: "#" },
-          { name: "Towards Data Science", type: "Articles", url: "#" }
-        ],
-        indiaScope: [
-          { title: "AI in Government", desc: "National AI Strategy will create 500,000+ jobs in public sector AI implementation by 2030." },
-          { title: "Healthcare Analytics", desc: "Post-pandemic focus on health data analytics creating specialized roles in hospitals and pharma companies." },
-          { title: "Agricultural Tech", desc: "AI-driven farming solutions for India's 150M farmers creating unique data science opportunities in agritech." }
-        ],
-        globalScope: [
-          { title: "Healthcare AI", desc: "Medical imaging analysis and drug discovery are creating high-demand roles in US and European healthcare systems." },
-          { title: "Climate Analytics", desc: "Environmental data science for climate modeling and sustainability is a rapidly growing field globally." },
-          { title: "Autonomous Systems", desc: "Data scientists are critical for developing self-driving cars and robotics in the US, Germany, and Japan." }
-        ]
-      },
-      designer: {
-        roadmap: `
-          graph TD
-          A["Learn Design\nPrinciples"] --> B["Create Portfolio\nwith User Context"]
-          B --> C["Master Tools\n(Figma, Adobe XD)"]
-          C --> D["UX Research\nMethods"]
-          D --> E["Freelance Projects\nfor Startups"]
-          E --> F["Full-time Role\nat Product Company"]
-          style A fill:#bb86fc,stroke:#3700b3,stroke-width:2px,color:#000
-          style F fill:#03dac6,stroke:#018786,stroke-width:2px,color:#000
-          classDef milestone fill:#4a00e0,stroke:#8e24aa,color:#fff;
-          class E milestone
-        `,
-        description: "Understand design fundamentals, build a portfolio with user contexts, master design tools, learn UX research methods, gain freelance experience, and transition into a full-time UI/UX designer role.",
-        salary: "₹5-12 LPA / $60k-100k",
-        growth: "18% (2023-2028)",
-        demand: "High",
-        timeline: "12-18 months",
-        indiaInsights: "India's digital transformation has created massive demand for designers. 78% of Indian startups prioritize UX, and government digital initiatives like UMANG app require specialized design talent.",
-        globalInsights: "Global companies are investing heavily in user experience, with design thinking becoming central to product development strategies across industries.",
-        skills: [
-          {name: "Figma", icon: "fab fa-figma"},
-          {name: "User Research", icon: "fas fa-users"},
-          {name: "Prototyping", icon: "fas fa-mouse-pointer"},
-          {name: "Visual Design", icon: "fas fa-paint-brush"},
-          {name: "Design Systems", icon: "fas fa-layer-group"},
-          {name: "Accessibility", icon: "fas fa-universal-access"}
-        ],
-        resources: [
-          { name: "Figma Tutorials", type: "Tool Learning", url: "#" },
-          { name: "Designerrs", type: "Indian Community", url: "#" },
-          { name: "Interaction Design Foundation", type: "Global Courses", url: "#" },
-          { name: "NN/g Articles", type: "Research", url: "#" }
-        ],
-        indiaScope: [
-          { title: "Voice & Vernacular UX", desc: "Designing for India's 22 official languages and voice interfaces for non-literate users is a growing specialization." },
-          { title: "Fintech Design", desc: "UPI and digital banking revolution creating demand for financial UX specialists in India's $1.3T fintech market." },
-          { title: "Government Digital Services", desc: "Designing citizen-centric interfaces for 300+ government services under Digital India initiative." }
-        ],
-        globalScope: [
-          { title: "Inclusive Design", desc: "Global focus on accessibility and inclusive design is creating specialized roles in multinational companies." },
-          { title: "AR/VR Experiences", desc: "Metaverse and spatial computing are driving demand for 3D and immersive experience designers in the US and Europe." },
-          { title: "Design Ops", desc: "Scaling design systems across large organizations is creating new roles in design operations and governance." }
-        ]
-      },
-      cybersecurity: {
-        roadmap: `
-          graph TD
-          A["Learn Networking\n& Security Basics"] --> B["Certifications\n(CEH, Security+)"]
-          B --> C["Hands-on Labs\n(TryHackMe, HTB)"]
-          C --> D["Specialize\n(Cloud, AppSec, SOC)"]
-          D --> E["Get Internship\nat Security Firm"]
-          E --> F["Full-time Role\nin Critical Sector"]
-          style A fill:#bb86fc,stroke:#3700b3,stroke-width:2px,color:#000
-          style F fill:#03dac6,stroke:#018786,stroke-width:2px,color:#000
-          classDef milestone fill:#4a00e0,stroke:#8e24aa,color:#fff;
-          class E milestone
-        `,
-        description: "Start with networking and security fundamentals, earn globally recognized certifications, practice in hands-on labs, specialize in high-demand areas, intern at security firms, and secure a cybersecurity role in critical sectors.",
-        salary: "₹7-18 LPA / $80k-140k",
-        growth: "35% (2023-2028)",
-        demand: "Very High",
-        timeline: "12-24 months",
-        indiaInsights: "India faces 1.5M cybersecurity job openings by 2025. New DPDP Act 2023 mandates data protection officers in all companies, creating unprecedented demand. Banking and defense sectors are top employers.",
-        globalInsights: "Global cybersecurity threats are increasing, with ransomware attacks up 100% year-over-year. Every organization now requires dedicated security professionals.",
-        skills: [
-          {name: "Ethical Hacking", icon: "fas fa-user-secret"},
-          {name: "Network Security", icon: "fas fa-shield-alt"},
-          {name: "Risk Assessment", icon: "fas fa-exclamation-triangle"},
-          {name: "SIEM Tools", icon: "fas fa-project-diagram"},
-          {name: "Incident Response", icon: "fas fa-bolt"},
-          {name: "Compliance", icon: "fas fa-balance-scale"}
-        ],
-        resources: [
-          { name: "TryHackMe", type: "Hands-on Labs", url: "#" },
-          { name: "CyberPeace Foundation", type: "Indian NGO", url: "#" },
-          { name: "SANS Institute", type: "Global Training", url: "#" },
-          { name: "OWASP", type: "Security Standards", url: "#" }
-        ],
-        indiaScope: [
-          { title: "Critical Infrastructure Protection", desc: "Securing India's power grids, railways, and nuclear facilities creating high-paying government roles." },
-          { title: "Data Protection Officers", desc: "Mandatory DPO roles in all companies with >100 employees under new privacy laws." },
-          { title: "Cyber Warfare", desc: "Defence Research and Development Organisation (DRDO) expanding cyber warfare units with specialized roles." }
-        ],
-        globalScope: [
-          { title: "Cloud Security", desc: "As organizations move to cloud, specialized cloud security architects are in high demand globally." },
-          { title: "Threat Intelligence", desc: "Analyzing global threat landscapes and developing proactive defenses is a growing specialization." },
-          { title: "IoT Security", desc: "Securing billions of connected devices in smart homes, cities, and industries is creating new opportunities." }
-        ]
-      },
-      cloudEngineer: {
-        roadmap: `
-          graph TD
-          A["Learn Cloud\nFundamentals"] --> B["AWS/Azure/GCP\nCertifications"]
-          B --> C["Infrastructure as Code\n(Terraform, CloudFormation)"]
-          C --> D["Containerization\n(Docker, Kubernetes)"]
-          D --> E["Get Internship\nat Cloud MSP"]
-          E --> F["Cloud Architect\nRole at Enterprise"]
-          style A fill:#bb86fc,stroke:#3700b3,stroke-width:2px,color:#000
-          style F fill:#03dac6,stroke:#018786,stroke-width:2px,color:#000
-          classDef milestone fill:#4a00e0,stroke:#8e24aa,color:#fff;
-          class E milestone
-        `,
-        description: "Master cloud platforms like AWS, Azure, or GCP, earn certifications, learn infrastructure as code, gain containerization skills, intern at cloud MSPs, and become a cloud architect at enterprises.",
-        salary: "₹9-22 LPA / $100k-160k",
-        growth: "40% (2023-2028)",
-        demand: "Very High",
-        timeline: "12-24 months",
-        indiaInsights: "India's cloud market will reach $13B by 2026. Government's 'Cloud First' policy mandates all new IT projects to be cloud-native. Indian MSPs like CtrlS and Sify are expanding rapidly.",
-        globalInsights: "Global cloud adoption is accelerating, with multi-cloud and hybrid cloud strategies becoming the norm. Specialized cloud security and cost optimization skills are highly valued.",
-        skills: [
-          {name: "AWS", icon: "fab fa-aws"},
-          {name: "Azure", icon: "fab fa-microsoft"},
-          {name: "Terraform", icon: "fas fa-cube"},
-          {name: "Kubernetes", icon: "fas fa-dharmachakra"},
-          {name: "CI/CD", icon: "fas fa-sync-alt"},
-          {name: "Cloud Security", icon: "fas fa-lock"}
-        ],
-        resources: [
-          { name: "AWS Training", type: "Official Courses", url: "#" },
-          { name: "CloudThat", type: "Indian Training", url: "#" },
-          { name: "Microsoft Learn", type: "Free Azure Training", url: "#" },
-          { name: "A Cloud Guru", type: "Global Platform", url: "#" }
-        ],
-        indiaScope: [
-          { title: "Sovereign Cloud", desc: "India's push for data sovereignty creating demand for local cloud infrastructure specialists." },
-          { title: "Edge Computing", desc: "5G rollout enabling edge computing solutions for manufacturing and smart cities." },
-          { title: "Green Cloud", desc: "Sustainability focus creating roles in optimizing cloud energy consumption." }
-        ],
-        globalScope: [
-          { title: "Multi-Cloud Management", desc: "Managing complex environments across AWS, Azure, and GCP is a critical skill for global enterprises." },
-          { title: "Serverless Architecture", desc: "Event-driven serverless computing is transforming application development globally." },
-          { title: "Cloud Cost Optimization", desc: "Specialists who can reduce cloud spending while maintaining performance are in high demand worldwide." }
-        ]
-      },
-      aiEngineer: {
-        roadmap: `
-          graph TD
-          A["Math & Python\nFoundations"] --> B["ML Algorithms\n& Frameworks"]
-          B --> C["Deep Learning\n(CNN, RNN, Transformers)"]
-          C --> D["Specialize\n(NLP, Computer Vision)"]
-          D --> E["Research Internship\nat AI Labs"]
-          E --> F["AI Engineer Role\nat Product Company"]
-          style A fill:#bb86fc,stroke:#3700b3,stroke-width:2px,color:#000
-          style F fill:#03dac6,stroke:#018786,stroke-width:2px,color:#000
-          classDef milestone fill:#4a00e0,stroke:#8e24aa,color:#fff;
-          class E milestone
-        `,
-        description: "Build strong math and Python foundations, master ML algorithms and frameworks, specialize in deep learning architectures, focus on NLP or computer vision, gain research experience, and become an AI engineer.",
-        salary: "₹12-30 LPA / $120k-200k",
-        growth: "45% (2023-2028)",
-        demand: "Extremely High",
-        timeline: "18-36 months",
-        indiaInsights: "India is the 3rd largest AI talent pool globally. Government's ₹10,300 crore IndiaAI mission will create 10,000+ high-end AI jobs. Startups like Krutrim and Sarvam AI are scaling rapidly.",
-        globalInsights: "Global AI investment is projected to reach $500B by 2027. Companies across all sectors are racing to implement AI solutions, creating unprecedented demand for talent.",
-        skills: [
-          {name: "PyTorch", icon: "fas fa-fire"},
-          {name: "TensorFlow", icon: "fab fa-tensorflow"},
-          {name: "NLP", icon: "fas fa-comment-dots"},
-          {name: "Computer Vision", icon: "fas fa-eye"},
-          {name: "LLMs", icon: "fas fa-brain"},
-          {name: "MLOps", icon: "fas fa-cogs"}
-        ],
-        resources: [
-          { name: "DeepLearning.AI", type: "Specializations", url: "#" },
-          { name: "IIT AI Courses", type: "Indian Programs", url: "#" },
-          { name: "Stanford CS231n", type: "Global Course", url: "#" },
-          { name: "Hugging Face", type: "Model Hub", url: "#" }
-        ],
-        indiaScope: [
-          { title: "Indic Language AI", desc: "Developing AI models for India's 22 scheduled languages creating unique research opportunities." },
-          { title: "AI in Agriculture", desc: "Computer vision for crop monitoring and yield prediction serving India's 150M farmers." },
-          { title: "Healthcare Diagnostics", desc: "AI-powered diagnostic tools for rural healthcare addressing doctor shortages." }
-        ],
-        globalScope: [
-          { title: "Generative AI", desc: "Creating and fine-tuning large language models is the hottest area in AI globally, with massive investment from tech giants." },
-          { title: "AI Ethics", desc: "Ensuring responsible AI development and deployment is creating new roles in governance and compliance." },
-          { title: "Robotics & Automation", desc: "AI-powered robotics for manufacturing, logistics, and healthcare is transforming industries worldwide." }
-        ]
-      }
-    };
-
-    const selectElement = document.getElementById("careerSelect");
-    const roadmapElement = document.getElementById("roadmap");
-    const descriptionElement = document.getElementById("description");
-    const salaryElement = document.getElementById("salary");
-    const growthElement = document.getElementById("growth");
-    const demandElement = document.getElementById("demand");
-    const timelineElement = document.getElementById("timeline");
-    const indiaInsightsElement = document.getElementById("india-insights");
-    const globalInsightsElement = document.getElementById("global-insights");
-    const skillsListElement = document.getElementById("skills-list");
-    const resourcesListElement = document.getElementById("resources-list");
-    const indiaScopeElement = document.getElementById("india-scope");
-    const globalScopeElement = document.getElementById("global-scope");
-
-    // Function to render the selected career roadmap and details
-    function renderCareer() {
-      const selected = selectElement.value;
-      const data = careerData[selected];
-
-      // Show loading state
-      roadmapElement.innerHTML = '<div class="loading"><div class="spinner"></div></div>';
-      
-      // Render Mermaid diagram dynamically
-      mermaid.render("roadmapDiagram", data.roadmap)
-        .then(({ svg }) => {
-          roadmapElement.innerHTML = svg;
-        })
-        .catch(err => {
-          roadmapElement.innerHTML = "<p style='color:#ff5555; text-align: center;'>Error rendering diagram</p>";
-          console.error(err);
-        });
-
-      // Update description
-      descriptionElement.textContent = data.description;
-      
-      // Update statistics
-      salaryElement.textContent = data.salary;
-      growthElement.textContent = data.growth;
-      demandElement.textContent = data.demand;
-      timelineElement.textContent = data.timeline;
-      
-      // Update market insights
-      indiaInsightsElement.textContent = data.indiaInsights;
-      globalInsightsElement.textContent = data.globalInsights;
-      
-      // Update skills
-      skillsListElement.innerHTML = data.skills.map(skill => 
-        `<div class="skill-item">
-          <i class="${skill.icon}"></i>
-          <div>${skill.name}</div>
-        </div>`
-      ).join('');
-      
-      // Update resources
-      resourcesListElement.innerHTML = data.resources.map(resource => 
-        `<div class="resource-card">
-          <h4><i class="fas fa-graduation-cap"></i> ${resource.name}</h4>
-          <p>${resource.type}</p>
-        </div>`
-      ).join('');
-      
-      // Update future scope
-      indiaScopeElement.innerHTML = data.indiaScope.map(scope => 
-        `<div class="scope-card">
-          <h4><i class="fas fa-lightbulb"></i> ${scope.title}</h4>
-          <p>${scope.desc}</p>
-        </div>`
-      ).join('');
-      
-      globalScopeElement.innerHTML = data.globalScope.map(scope => 
-        `<div class="scope-card">
-          <h4><i class="fas fa-lightbulb"></i> ${scope.title}</h4>
-          <p>${scope.desc}</p>
-        </div>`
-      ).join('');
-    }
-
-    // Tab switching functionality
-    document.querySelectorAll('.scope-tab').forEach(tab => {
-      tab.addEventListener('click', () => {
-        // Remove active class from all tabs and content
-        document.querySelectorAll('.scope-tab').forEach(t => t.classList.remove('active'));
-        document.querySelectorAll('.scope-content').forEach(c => c.classList.remove('active'));
-        
-        // Add active class to clicked tab
-        tab.classList.add('active');
-        
-        // Show corresponding content
-        const target = tab.getAttribute('data-target');
-        document.getElementById(target).classList.add('active');
-      });
-    });
-
-    // Event listener on career selection
-    selectElement.addEventListener("change", renderCareer);
-
-    // Initial render on page load
-    document.addEventListener("DOMContentLoaded", () => {
-      renderCareer();
-    });
-  </script>
+</div></div>
+<script>
+const RM={
+  web:{title:"Web Developer Roadmap",time:"12–18 months",sal:[{l:"India (Entry)",v:"₹4–8 LPA"},{l:"India (Senior)",v:"₹12–25 LPA"},{l:"Global Remote",v:"$60k–120k"}],steps:[{s:"done",t:"Programming Fundamentals",d:"HTML, CSS, JavaScript basics, Git version control.",tags:["HTML","CSS","JS","Git"],tm:"1–2 mo"},{s:"done",t:"Frontend Development",d:"React or Vue.js, responsive design, REST API consumption.",tags:["React","Tailwind"],tm:"2–3 mo"},{s:"active",t:"Backend Development",d:"Node.js, Express, MongoDB / PostgreSQL databases.",tags:["Node.js","MongoDB"],tm:"2–3 mo"},{s:"",t:"Build Portfolio Projects",d:"3 full-stack apps — deployed live and on GitHub.",tags:["Portfolio"],tm:"2 mo"},{s:"",t:"Internship / Freelance",d:"Real-world experience at a startup or freelance client.",tags:["Internship"],tm:"3–6 mo"},{s:"",t:"Full-Time Role 🎉",d:"Apply with strong portfolio + DSA practice + referrals.",tags:["Interviews"],tm:"Ongoing"}],ins:[{t:"India Market",b:"5,000+ startups. ₹4–8 LPA entry level. Tier-2 cities emerging as hubs."},{t:"Global Outlook",b:"Remote roles at $60k–120k. React + AWS combination highly valued."},{t:"Hot Skills 2025",b:"TypeScript, Next.js, Docker, and GraphQL are differentiators."},{t:"Growth Path",b:"Junior → Mid → Senior → Tech Lead. ~3–5 years per level."}],skills:["JavaScript","TypeScript","React","Node.js","MongoDB","Docker","AWS","Git","Next.js","REST API"]},
+  data:{title:"Data Scientist Roadmap",time:"18–24 months",sal:[{l:"India (Entry)",v:"₹6–10 LPA"},{l:"India (Senior)",v:"₹18–35 LPA"},{l:"Global Remote",v:"$90k–150k"}],steps:[{s:"done",t:"Math & Statistics Foundations",d:"Linear algebra, probability, statistics, hypothesis testing.",tags:["Statistics","Calculus"],tm:"2 mo"},{s:"done",t:"Python for Data Science",d:"NumPy, Pandas, Matplotlib, Seaborn.",tags:["Python","Pandas"],tm:"2 mo"},{s:"active",t:"Machine Learning",d:"Supervised, unsupervised, model evaluation, Scikit-learn.",tags:["ML","Scikit-learn"],tm:"3–4 mo"},{s:"",t:"Deep Learning & Specialisation",d:"PyTorch/TensorFlow, NLP or Computer Vision.",tags:["PyTorch","NLP"],tm:"3 mo"},{s:"",t:"Kaggle Projects (5+)",d:"Build end-to-end portfolio with real datasets and competitions.",tags:["Kaggle","Portfolio"],tm:"3 mo"},{s:"",t:"Data Scientist Role 🎉",d:"Target BFSI, e-commerce, and healthcare companies.",tags:["Interviews"],tm:"Ongoing"}],ins:[{t:"India Market",b:"2nd largest analytics market globally. BFSI sector is the top employer."},{t:"Global Outlook",b:"$90k–150k with ML specialisation. Healthcare AI growing fast."},{t:"Hot Areas 2025",b:"LLMs, RAG, MLOps, and causal inference are key differentiators."},{t:"Growth Path",b:"Analyst → Data Scientist → Senior DS → Research Scientist."}],skills:["Python","SQL","Pandas","Scikit-learn","PyTorch","TensorFlow","MLflow","Spark","Tableau","Statistics"]},
+  cloud:{title:"Cloud Engineer Roadmap",time:"12–18 months",sal:[{l:"India (Entry)",v:"₹7–12 LPA"},{l:"India (Senior)",v:"₹20–40 LPA"},{l:"Global Remote",v:"$100k–160k"}],steps:[{s:"done",t:"Cloud Fundamentals",d:"AWS/Azure/GCP basics, virtualisation, networking concepts.",tags:["AWS","Networking"],tm:"1–2 mo"},{s:"done",t:"Core Certification",d:"AWS Solutions Architect Associate or Azure Administrator.",tags:["AWS SAA","Cert"],tm:"2–3 mo"},{s:"active",t:"Infrastructure as Code",d:"Terraform, CloudFormation — automate infrastructure provisioning.",tags:["Terraform","IaC"],tm:"2 mo"},{s:"",t:"Containers & Orchestration",d:"Docker, Kubernetes (EKS/AKS/GKE), Helm charts.",tags:["Docker","K8s"],tm:"2–3 mo"},{s:"",t:"CI/CD & DevOps",d:"GitHub Actions, ArgoCD, GitOps workflows.",tags:["CI/CD","ArgoCD"],tm:"2 mo"},{s:"",t:"Cloud Engineer Role 🎉",d:"Target cloud MSPs and product companies. AWS + Terraform = top combo.",tags:["Interviews"],tm:"Ongoing"}],ins:[{t:"India Market",b:"Cloud market reaches $13B by 2026. Govt 'Cloud First' policy driving demand."},{t:"Global Outlook",b:"Multi-cloud skills command $130k–160k. FinOps specialisation is hot."},{t:"Hot Skills 2025",b:"Kubernetes, Terraform, ArgoCD, and eBPF are must-haves."},{t:"Growth Path",b:"Support → Cloud Eng → Solutions Architect → Cloud Architect."}],skills:["AWS","Terraform","Kubernetes","Docker","CI/CD","Python","Linux","Networking","Ansible","Security"]},
+  ai:{title:"AI/ML Engineer Roadmap",time:"18–30 months",sal:[{l:"India (Entry)",v:"₹10–18 LPA"},{l:"India (Senior)",v:"₹30–70 LPA"},{l:"Global Remote",v:"$120k–200k"}],steps:[{s:"done",t:"Math & Python Foundations",d:"Linear algebra, calculus, probability, Python fluency.",tags:["Math","Python"],tm:"2–3 mo"},{s:"done",t:"ML Algorithms",d:"Regression, classification, clustering, tree models, ensembles.",tags:["ML","Scikit-learn"],tm:"2 mo"},{s:"active",t:"Deep Learning",d:"Neural networks, CNNs, RNNs, Transformers, attention mechanism.",tags:["PyTorch","Transformers"],tm:"3–4 mo"},{s:"",t:"NLP / CV Specialisation",d:"Fine-tune LLMs, build RAG pipelines, or train vision models.",tags:["LLMs","RAG"],tm:"3 mo"},{s:"",t:"MLOps & Deployment",d:"MLflow, model serving, monitoring, data/model drift detection.",tags:["MLOps","FastAPI"],tm:"2 mo"},{s:"",t:"AI Engineer Role 🎉",d:"Target AI-first companies, research labs, and product companies.",tags:["Interviews"],tm:"Ongoing"}],ins:[{t:"India Market",b:"₹10,300 cr IndiaAI mission. Krutrim and Sarvam AI scaling rapidly."},{t:"Global Outlook",b:"$120k–200k with LLM skills. $500B AI investment projected by 2027."},{t:"Hot Areas 2025",b:"RAG, fine-tuning, AI agents, and multimodal models are the focus."},{t:"Growth Path",b:"MLE → Senior MLE → Staff MLE → Research Scientist / Director."}],skills:["Python","PyTorch","TensorFlow","Transformers","LangChain","MLflow","FastAPI","Docker","CUDA","HuggingFace"]},
+  security:{title:"Cybersecurity Analyst Roadmap",time:"12–18 months",sal:[{l:"India (Entry)",v:"₹5–9 LPA"},{l:"India (Senior)",v:"₹15–30 LPA"},{l:"Global Remote",v:"$80k–140k"}],steps:[{s:"done",t:"Networking & OS Fundamentals",d:"TCP/IP, DNS, HTTP, Linux CLI, Windows Active Directory.",tags:["Networking","Linux"],tm:"2 mo"},{s:"done",t:"Security Certifications",d:"CompTIA Security+, CEH, or eJPT for beginners.",tags:["Security+","CEH"],tm:"2–3 mo"},{s:"active",t:"Hands-on Hacking Labs",d:"TryHackMe and HackTheBox — ethical hacking practice.",tags:["TryHackMe","HTB"],tm:"3 mo"},{s:"",t:"Specialise",d:"SOC analysis, application security, or cloud security — pick one.",tags:["SIEM","OWASP"],tm:"2 mo"},{s:"",t:"Bug Bounty / Internship",d:"HackerOne, Bugcrowd for real-world experience and CVE reporting.",tags:["Bug Bounty","CVE"],tm:"3 mo"},{s:"",t:"Security Analyst Role 🎉",d:"Target BFSI, defence sector, and cybersecurity consulting firms.",tags:["Interviews"],tm:"Ongoing"}],ins:[{t:"India Market",b:"1.5M job openings by 2025. DPDP Act 2023 created mandatory DPO roles."},{t:"Global Outlook",b:"Ransomware attacks up 100% YoY. Every organisation needs security."},{t:"Hot Areas 2025",b:"Cloud Security, Threat Intelligence, and AI-powered SOC are trending."},{t:"Growth Path",b:"Analyst → Senior Analyst → Security Engineer → CISO."}],skills:["Networking","Linux","Python","SIEM","Nmap","Burp Suite","Metasploit","OWASP","Compliance","Forensics"]},
+  design:{title:"UI/UX Designer Roadmap",time:"10–14 months",sal:[{l:"India (Entry)",v:"₹4–7 LPA"},{l:"India (Senior)",v:"₹12–22 LPA"},{l:"Global Remote",v:"$60k–100k"}],steps:[{s:"done",t:"Design Principles",d:"Typography, colour theory, layout, gestalt psychology, accessibility.",tags:["Typography","Colour"],tm:"1–2 mo"},{s:"done",t:"Master Figma",d:"Components, auto-layout, prototyping, and design systems.",tags:["Figma","Prototyping"],tm:"2 mo"},{s:"active",t:"UX Research Methods",d:"User interviews, usability tests, A/B testing, card sorting.",tags:["UX Research","Personas"],tm:"2 mo"},{s:"",t:"Build Portfolio (5 Case Studies)",d:"End-to-end studies: research → design → testing → iteration.",tags:["Portfolio","Behance"],tm:"3 mo"},{s:"",t:"Freelance / Internship",d:"Real feedback from real users is the most valuable learning.",tags:["Freelance","Startup"],tm:"2–3 mo"},{s:"",t:"Product Designer Role 🎉",d:"Target fintech, SaaS, and product-first startups.",tags:["Interviews"],tm:"Ongoing"}],ins:[{t:"India Market",b:"78% of Indian startups prioritise UX. Fintech & EdTech are top employers."},{t:"Global Outlook",b:"Remote roles at $60k–100k. A strong portfolio beats a degree."},{t:"Hot Skills 2025",b:"Motion design, AI-assisted tools (Figma AI), and accessibility focus."},{t:"Growth Path",b:"Junior Designer → Product Designer → Lead → Head of Design."}],skills:["Figma","User Research","Prototyping","Design Systems","Accessibility","Framer","Usability Testing","Motion Design","Visual Design","CSS"]}
+};
+function pick(el){document.querySelectorAll(".copt").forEach(c=>c.classList.remove("active"));el.classList.add("active");render(el.dataset.c);}
+function render(c){
+  const d=RM[c]||RM.web;
+  document.getElementById("rm-title").textContent=d.title;
+  document.getElementById("rm-time").textContent="⏱ "+d.time;
+  document.getElementById("sal").innerHTML=d.sal.map(s=>`<div class="sal-row"><span class="sal-l">${s.l}</span><span class="sal-v">${s.v}</span></div>`).join("");
+  document.getElementById("rm-steps").innerHTML=d.steps.map((s,i)=>`
+    <div class="rm-step">
+      <div class="sd ${s.s==="done"?"sd-done":s.s==="active"?"sd-active":"sd-pend"}">
+        ${s.s==="done"?'<i class="fas fa-check" style="color:#fff;font-size:.65rem;"></i>':s.s==="active"?'<span style="width:9px;height:9px;background:#fff;border-radius:50%;display:block;"></span>':`<span style="font-size:.68rem;color:var(--t3);">${i+1}</span>`}
+      </div>
+      <div class="sc">
+        <div class="sc-top"><h4>${s.t}</h4><span class="tbadge">${s.tm}</span></div>
+        <p>${s.d}</p>
+        <div class="stags">${s.tags.map(t=>`<span class="stag">${t}</span>`).join("")}</div>
+      </div>
+    </div>`).join("");
+  document.getElementById("rm-ins").innerHTML=d.ins.map(i=>`<div class="ins-b"><h5>${i.t}</h5><p>${i.b}</p></div>`).join("");
+  document.getElementById("rm-skills").innerHTML=d.skills.map(s=>`<span class="pill pb">${s}</span>`).join("");
+}
+render("web");
+</script>
 </body>
 </html>

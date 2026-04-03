@@ -556,6 +556,76 @@
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
+
+        /* BLOG SECTION (SAFE - NO EXISTING STYLE TOUCHED) */
+.blog-input {
+    width: 100%;
+    min-height: 120px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 15px;
+    color: var(--text-primary);
+    resize: none;
+    outline: none;
+    transition: 0.3s;
+}
+
+.blog-input:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 10px rgba(108, 92, 231, 0.3);
+}
+
+.blog-actions {
+    margin-top: 12px;
+    display: flex;
+    gap: 10px;
+}
+
+.blog-btn {
+    background: var(--accent);
+    border: none;
+    padding: 10px 18px;
+    border-radius: 20px;
+    color: white;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.blog-btn:hover {
+    background: var(--accent-hover);
+}
+
+#saved-blogs {
+    margin-top: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.blog-card {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 12px;
+    border-radius: 10px;
+    font-size: 0.95rem;
+}
+
+.mini-timer {
+  text-align: center;
+  padding: 20px;
+}
+
+.timer-display {
+  font-size: 40px;
+  margin: 15px 0;
+  font-weight: bold;
+}
+
+.timer-buttons button {
+  margin: 5px;
+  padding: 8px 16px;
+  cursor: pointer;
+}
     </style>
 </head>
 <body>
@@ -708,7 +778,82 @@
                 </div>
             </div>
         </div>
-        
+        <!-- Blog / Mind Journal Section -->
+<div class="section">
+    <div class="section-title">
+        <i class="fas fa-pen-nib"></i>
+        <h2>Mind Journal</h2>
+    </div>
+
+    <p style="color: var(--text-secondary); margin-bottom: 15px;">
+        Write your thoughts freely... this space is just yours 🌿
+    </p>
+
+    <textarea id="blog-input" class="blog-input" placeholder="What's on your mind today..."></textarea>
+
+    <div class="blog-actions">
+        <button id="save-blog" class="blog-btn">Save</button>
+        <button id="clear-blog" class="blog-btn">Clear</button>
+    </div>
+
+    <div id="saved-blogs"></div>
+</div>
+
+<!-- Mini Timer Section -->
+<section class="mini-timer">
+  <h2>⏳ Focus Timer</h2>
+  
+  <div class="timer-display" id="timer">
+    25:00
+  </div>
+
+  <div class="timer-buttons">
+    <button onclick="startTimer()">Start</button>
+    <button onclick="pauseTimer()">Pause</button>
+    <button onclick="resetTimer()">Reset</button>
+  </div>
+</section>
+
+<script>
+let time = 25 * 60; // 25 minutes
+let interval = null;
+
+function updateDisplay() {
+  let minutes = Math.floor(time / 60);
+  let seconds = time % 60;
+  document.getElementById("timer").innerText =
+    `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+}
+
+function startTimer() {
+  if (interval) return;
+
+  interval = setInterval(() => {
+    if (time > 0) {
+      time--;
+      updateDisplay();
+    } else {
+      clearInterval(interval);
+      interval = null;
+      alert("Session Complete 🎉");
+    }
+  }, 1000);
+}
+
+function pauseTimer() {
+  clearInterval(interval);
+  interval = null;
+}
+
+function resetTimer() {
+  clearInterval(interval);
+  interval = null;
+  time = 25 * 60;
+  updateDisplay();
+}
+
+updateDisplay();
+</script>
         <footer>
             <p>© 2023 Calm Space | Music powered by SoundCloud</p>
         </footer>
@@ -996,6 +1141,46 @@
                 }, 500);
             }
         });
+
+        // BLOG FEATURE (ISOLATED - NO CONFLICT)
+const blogInput = document.getElementById("blog-input");
+const saveBlogBtn = document.getElementById("save-blog");
+const clearBlogBtn = document.getElementById("clear-blog");
+const savedBlogsContainer = document.getElementById("saved-blogs");
+
+// Load saved blogs
+window.addEventListener("load", () => {
+    const blogs = JSON.parse(localStorage.getItem("lifecraft_blogs")) || [];
+    blogs.forEach(addBlogToUI);
+});
+
+// Save blog
+saveBlogBtn.addEventListener("click", () => {
+    const text = blogInput.value.trim();
+    if (!text) return;
+
+    addBlogToUI(text);
+
+    const blogs = JSON.parse(localStorage.getItem("lifecraft_blogs")) || [];
+    blogs.push(text);
+    localStorage.setItem("lifecraft_blogs", JSON.stringify(blogs));
+
+    blogInput.value = "";
+});
+
+// Clear input
+clearBlogBtn.addEventListener("click", () => {
+    blogInput.value = "";
+});
+
+// Add blog to UI
+function addBlogToUI(text) {
+    const div = document.createElement("div");
+    div.className = "blog-card";
+    div.textContent = text;
+    savedBlogsContainer.prepend(div);
+}
+        
     </script>
 </body>
 </html>

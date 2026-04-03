@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Skill Gap — LifeCraft</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js" defer></script>
+  <style>
+    :root{--bg:#060912;--s1:#0f1828;--s2:#162034;--s3:#1d2a40;--b1:rgba(255,255,255,0.06);--b2:rgba(255,255,255,0.11);--t1:#e8f0ff;--t2:#8da4c8;--t3:#4e6280;--blue:#4080ff;--blue2:#7aaeff;--violet:#7c5cf8;--cyan:#22d4ee;--amber:#f59e0b;--rose:#f43f5e;--green:#10b981;--ga:linear-gradient(135deg,#4080ff,#7c5cf8);--gc:linear-gradient(135deg,#f59e0b,#f97316);--font-d:'Syne',sans-serif;--font-b:'DM Sans',sans-serif;--r:12px;--r2:18px;}
+    *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+    body{font-family:var(--font-b);background:var(--bg);color:var(--t1);min-height:100vh;}
+    body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;background:radial-gradient(ellipse 900px 700px at 15% 5%,rgba(64,128,255,0.07) 0%,transparent 55%),radial-gradient(ellipse 700px 500px at 85% 85%,rgba(124,92,248,0.07) 0%,transparent 55%);}
+    nav{position:sticky;top:0;z-index:999;display:flex;align-items:center;justify-content:space-between;padding:0 2.5rem;height:66px;background:rgba(6,9,18,0.88);backdrop-filter:blur(28px);border-bottom:1px solid var(--b1);}
+    nav::after{content:'';position:absolute;bottom:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(64,128,255,.4) 40%,rgba(124,92,248,.4) 60%,transparent);}
+    .logo{font-family:var(--font-d);font-size:1.5rem;font-weight:800;background:var(--ga);-webkit-background-clip:text;-webkit-text-fill-color:transparent;display:flex;align-items:center;gap:10px;text-decoration:none;}
+    .lp{width:9px;height:9px;border-radius:50%;background:var(--ga);animation:lp 2.4s ease-in-out infinite;}
+    @keyframes lp{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.6)}}
+    .nl{display:flex;gap:4px;}
+    .nb{display:flex;align-items:center;gap:7px;padding:8px 16px;border-radius:var(--r);background:none;border:none;cursor:pointer;color:var(--t3);font-family:var(--font-b);font-size:.82rem;font-weight:500;transition:all .18s;text-decoration:none;white-space:nowrap;}
+    .nb:hover{color:var(--t1);background:rgba(255,255,255,.06);}
+    .nb.active{color:var(--blue2);background:rgba(64,128,255,.1);border:1px solid rgba(64,128,255,.18);}
+    .nb i{font-size:.75rem;}
+    .page{position:relative;z-index:1;}
+    .inner{max-width:1200px;margin:0 auto;padding:2rem 2rem 4rem;}
+    .ey{font-size:.73rem;font-weight:800;text-transform:uppercase;letter-spacing:.12em;color:var(--amber);margin-bottom:.4rem;}
+    .ptitle{font-family:var(--font-d);font-size:1.8rem;font-weight:800;letter-spacing:-0.025em;margin-bottom:.3rem;}
+    .ptitle span{background:var(--gc);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+    .psub{color:var(--t2);font-size:.88rem;margin-bottom:1.5rem;}
+    .tr{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:1.5rem;}
+    select{padding:9px 14px;background:var(--s2);border:1px solid var(--b2);border-radius:var(--r);color:var(--t1);font-family:var(--font-b);font-size:.855rem;outline:none;}
+    select option{background:var(--s2);}
+    .btnp{display:inline-flex;align-items:center;gap:7px;padding:9px 18px;border-radius:var(--r);background:var(--ga);color:#fff;font-family:var(--font-b);font-size:.8rem;font-weight:700;border:none;cursor:pointer;}
+    .bdg{display:inline-flex;align-items:center;padding:5px 12px;border-radius:20px;font-size:.78rem;font-weight:700;background:rgba(64,128,255,.12);color:var(--blue2);border:1px solid rgba(64,128,255,.2);}
+    .g2{display:grid;grid-template-columns:1fr 1fr;gap:1.25rem;}
+    .card{background:var(--s1);border:1px solid var(--b1);border-radius:var(--r2);padding:1.5rem;}
+    .card+.card{margin-top:1.1rem;}
+    .ct{font-family:var(--font-d);font-size:.9rem;font-weight:700;margin-bottom:1rem;}
+    .sk-row{display:flex;align-items:center;gap:10px;margin-bottom:10px;}
+    .sk-name{font-size:.83rem;width:130px;flex-shrink:0;}
+    .pw{flex:1;background:var(--s3);border-radius:20px;height:7px;overflow:hidden;}
+    .pb{height:100%;border-radius:20px;transition:width 1.2s cubic-bezier(.2,1,.3,1);}
+    .sp{font-size:.74rem;color:var(--t3);width:32px;text-align:right;flex-shrink:0;}
+    .pill{display:inline-flex;align-items:center;padding:3px 9px;border-radius:20px;font-size:.7rem;font-weight:700;}
+    .pr{background:rgba(244,63,94,.12);color:var(--rose);border:1px solid rgba(244,63,94,.18);}
+    .pa{background:rgba(245,158,11,.12);color:var(--amber);border:1px solid rgba(245,158,11,.18);}
+    .pg{background:rgba(16,185,129,.12);color:var(--green);border:1px solid rgba(16,185,129,.18);}
+    .rc{display:flex;gap:11px;padding:.9rem;border-radius:var(--r);background:var(--s2);border:1px solid var(--b1);margin-bottom:.65rem;}
+    .ri{width:38px;height:38px;border-radius:var(--r);display:flex;align-items:center;justify-content:center;font-size:.9rem;flex-shrink:0;}
+    .rb h4{font-size:.84rem;font-weight:700;margin-bottom:2px;}
+    .rb p{font-size:.75rem;color:var(--t3);}
+    .rb a{color:var(--blue2);font-size:.75rem;text-decoration:none;font-weight:700;}
+    @media(max-width:900px){.g2{grid-template-columns:1fr;}}
+    @media(max-width:600px){nav{padding:0 1rem;}.nb span{display:none;}.inner{padding:1.25rem 1rem 3rem;}}
+  </style>
+</head>
+<body>
+<nav>
+  <a class="logo" href="career_page_hero.html"><div class="lp"></div>LifeCraft</a>
+  <div class="nl">
+    <a class="nb" href="career_page_hero.html"><i class="fas fa-house"></i><span>Home</span></a>
+    <a class="nb" href="resume_builder.html"><i class="fas fa-file-alt"></i><span>Builder</span></a>
+    <a class="nb" href="ats_analyzer.html"><i class="fas fa-chart-bar"></i><span>ATS</span></a>
+    <a class="nb active" href="skill_gap.html"><i class="fas fa-brain"></i><span>Skills</span></a>
+    <a class="nb" href="interview_prep.html"><i class="fas fa-comments"></i><span>Interview</span></a>
+    <a class="nb" href="career_guidance.html"><i class="fas fa-map"></i><span>Roadmap</span></a>
+    <a class="nb" href="connect.html"><i class="fas fa-envelope"></i><span>Connect</span></a>
+  </div>
+</nav>
+<div class="page"><div class="inner">
+  <div class="ey">Step 03</div>
+  <div class="ptitle">Skill Gap <span>Detector</span></div>
+  <div class="psub">Your skills vs industry benchmarks — with a prioritised learning plan and curated resources.</div>
+  <div class="tr">
+    <select id="sg-dom" onchange="go()">
+      <option value="web">Web Development</option>
+      <option value="data">Data Science</option>
+      <option value="cloud">Cloud Computing</option>
+      <option value="ai">AI / ML Engineering</option>
+    </select>
+    <button class="btnp" onclick="go()"><i class="fas fa-sync-alt"></i> Refresh</button>
+    <span class="bdg" id="bdg"></span>
+  </div>
+  <div class="g2">
+    <div>
+      <div class="card">
+        <div class="ct" style="color:var(--green)"><i class="fas fa-check-circle" style="margin-right:6px"></i>Skills You Have</div>
+        <div id="have"></div>
+      </div>
+      <div class="card">
+        <div class="ct" style="color:var(--rose)"><i class="fas fa-exclamation-circle" style="margin-right:6px"></i>Skills to Acquire</div>
+        <div id="need"></div>
+      </div>
+    </div>
+    <div>
+      <div class="card">
+        <div class="ct">Proficiency Radar</div>
+        <div style="position:relative;height:265px"><canvas id="rc"></canvas></div>
+      </div>
+      <div class="card">
+        <div class="ct"><i class="fas fa-book-open" style="color:var(--blue2);margin-right:6px"></i>Recommended Resources</div>
+        <div id="res"></div>
+      </div>
+    </div>
+  </div>
+</div></div>
+<script>
+const D={
+  web:{have:[{n:"JavaScript",v:82},{n:"React",v:75},{n:"Node.js",v:70},{n:"MongoDB",v:60},{n:"Git",v:88},{n:"HTML/CSS",v:92}],need:[{n:"TypeScript",p:"High"},{n:"Docker",p:"High"},{n:"Jest (Testing)",p:"Med"},{n:"GraphQL",p:"Med"},{n:"Next.js",p:"Low"}],r:{l:["Frontend","Backend","Database","DevOps","Testing"],y:[82,70,60,40,35],i:[88,82,76,72,78]},res:[{ic:"fab fa-youtube",col:"#f43f5e",t:"Full-Stack Roadmap 2025",d:"Traversy Media — complete path",u:"https://youtube.com"},{ic:"fas fa-book",col:"#7aaeff",t:"TypeScript Handbook",d:"Official TS docs + exercises",u:"https://typescriptlang.org"},{ic:"fas fa-laptop-code",col:"#22d4ee",t:"Frontend Masters",d:"Advanced React & Next.js",u:"https://frontendmasters.com"},{ic:"fas fa-code",col:"#f59e0b",t:"LeetCode 75 Plan",d:"Top interview coding problems",u:"https://leetcode.com"}]},
+  data:{have:[{n:"Python",v:78},{n:"Pandas",v:65},{n:"SQL",v:72},{n:"Statistics",v:55},{n:"Matplotlib",v:60}],need:[{n:"TensorFlow",p:"High"},{n:"Apache Spark",p:"High"},{n:"Tableau",p:"Med"},{n:"Scikit-learn adv.",p:"Med"},{n:"Feature Eng.",p:"Low"}],r:{l:["Python","ML Algos","Databases","Visualization","Statistics"],y:[78,55,70,60,55],i:[88,86,80,82,90]},res:[{ic:"fas fa-graduation-cap",col:"#7aaeff",t:"ML Course – Andrew Ng",d:"Best foundational ML course",u:"https://coursera.org"},{ic:"fas fa-flask",col:"#22d4ee",t:"Kaggle Learn",d:"Free hands-on notebooks",u:"https://kaggle.com/learn"},{ic:"fas fa-book",col:"#f59e0b",t:"Analytics Vidhya",d:"Indian DS community",u:"https://analyticsvidhya.com"},{ic:"fab fa-youtube",col:"#f43f5e",t:"StatQuest",d:"Stats made visually clear",u:"https://youtube.com"}]},
+  cloud:{have:[{n:"AWS Basics",v:65},{n:"Linux",v:75},{n:"Docker",v:60},{n:"Networking",v:55},{n:"Git",v:88}],need:[{n:"Terraform",p:"High"},{n:"Kubernetes",p:"High"},{n:"CI/CD Pipelines",p:"Med"},{n:"Azure / GCP",p:"Med"},{n:"FinOps",p:"Low"}],r:{l:["AWS","IaC","Containers","Networking","Security"],y:[65,30,60,55,45],i:[92,82,86,76,82]},res:[{ic:"fab fa-aws",col:"#f59e0b",t:"AWS Training & Cert",d:"Official free learning paths",u:"https://aws.amazon.com/training"},{ic:"fas fa-cube",col:"#22d4ee",t:"HashiCorp Terraform",d:"Official Terraform tutorials",u:"https://developer.hashicorp.com"},{ic:"fas fa-ship",col:"#7aaeff",t:"Kubernetes Docs",d:"Interactive K8s tutorials",u:"https://kubernetes.io/docs"},{ic:"fas fa-graduation-cap",col:"#a78bfa",t:"A Cloud Guru",d:"Best cloud cert prep",u:"https://acloudguru.com"}]},
+  ai:{have:[{n:"Python",v:80},{n:"NumPy",v:70},{n:"Linear Algebra",v:60},{n:"PyTorch (basic)",v:45},{n:"Git",v:85}],need:[{n:"Transformers/LLMs",p:"High"},{n:"MLOps",p:"High"},{n:"Computer Vision",p:"Med"},{n:"Advanced NLP",p:"Med"},{n:"RL",p:"Low"}],r:{l:["Python","Deep Learning","NLP","Vision","MLOps"],y:[80,45,40,35,25],i:[92,88,84,80,76]},res:[{ic:"fas fa-brain",col:"#a78bfa",t:"DeepLearning.AI",d:"Andrew Ng specializations",u:"https://deeplearning.ai"},{ic:"fas fa-robot",col:"#22d4ee",t:"Hugging Face Courses",d:"Free NLP & LLM tutorials",u:"https://huggingface.co/learn"},{ic:"fas fa-university",col:"#7aaeff",t:"Fast.ai",d:"Practical deep learning",u:"https://fast.ai"},{ic:"fab fa-youtube",col:"#f43f5e",t:"Karpathy Lectures",d:"Best neural net explanations",u:"https://youtube.com"}]}
+};
+let ci=null;
+function go(){
+  const d=D[document.getElementById("sg-dom").value]||D.web;
+  const pct=Math.round((d.have.length/(d.have.length+d.need.length))*100);
+  document.getElementById("bdg").textContent=pct+"% skill coverage";
+  document.getElementById("have").innerHTML=d.have.map(s=>`<div class="sk-row"><span class="sk-name">${s.n}</span><div class="pw"><div class="pb" style="width:${s.v}%;background:var(--green);"></div></div><span class="sp">${s.v}%</span></div>`).join("");
+  document.getElementById("need").innerHTML=d.need.map(s=>{const c=s.p==="High"?"pr":s.p==="Med"?"pa":"pg";return`<div class="sk-row"><span class="sk-name">${s.n}</span><div style="flex:1"></div><span class="pill ${c}">${s.p}</span></div>`;}).join("");
+  if(ci)ci.destroy();
+  const fn=()=>{
+    if(typeof Chart==="undefined"){setTimeout(fn,200);return;}
+    ci=new Chart(document.getElementById("rc").getContext("2d"),{type:"radar",data:{labels:d.r.l,datasets:[{label:"Your Level",data:d.r.y,backgroundColor:"rgba(64,128,255,0.15)",borderColor:"#4080ff",pointBackgroundColor:"#4080ff",borderWidth:2},{label:"Industry",data:d.r.i,backgroundColor:"rgba(34,212,238,0.08)",borderColor:"#22d4ee",pointBackgroundColor:"#22d4ee",borderWidth:1.5}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{labels:{color:"#8da4c8",font:{size:11}}}},scales:{r:{angleLines:{color:"rgba(255,255,255,0.05)"},grid:{color:"rgba(255,255,255,0.05)"},pointLabels:{color:"#8da4c8",font:{size:11}},ticks:{display:false},min:0,max:100}}}});
+  };fn();
+  document.getElementById("res").innerHTML=d.res.map(r=>`<div class="rc"><div class="ri" style="background:rgba(64,128,255,.1);color:${r.col}"><i class="${r.ic}"></i></div><div class="rb"><h4>${r.t}</h4><p>${r.d}</p><a href="${r.u}" target="_blank">Visit →</a></div></div>`).join("");
+}
+go();
+</script>
+</body>
+</html>

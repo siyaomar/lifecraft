@@ -1,0 +1,19 @@
+/* LifeCraft Shared Design System — link this in every sub-page */
+:root {
+  --bg: #060912; --bg2: #0b1020;
+  --s1: #0f1828; --s2: #162034; --s3: #1d2a40;
+  --b1: rgba(255,255,255,0.06); --b2: rgba(255,255,255,0.11); --b3: rgba(255,255,255,0.18);
+  --t1: #e8f0ff; --t2: #8da4c8; --t3: #4e6280;
+  --blue: #4080ff; --blue2: #7aaeff; --violet: #7c5cf8;
+  --cyan: #22d4ee; --teal: #14b8a6; --amber: #f59e0b;
+  --rose: #f43f5e; --green: #10b981; --orange: #f97316;
+  --ga: linear-gradient(135deg,#4080ff,#7c5cf8);
+  --gb: linear-gradient(135deg,#22d4ee,#4080ff);
+  --gc: linear-gradient(135deg,#f59e0b,#f97316);
+  --gd: linear-gradient(135deg,#f43f5e,#7c5cf8);
+  --ge: linear-gradient(135deg,#10b981,#22d4ee);
+  --font-d: 'Syne', sans-serif; --font-b: 'DM Sans', sans-serif;
+  --r: 12px; --r2: 18px; --r3: 24px;
+  --card-shadow: 0 2px 24px rgba(0,0,0,.5), 0 1px 0 rgba(255,255,255,.04) inset;
+  --card-hover: 0 14px 48px rgba(0,0,0,.65), 0 1px 0 rgba(255,255,255,.06) inset;
+}

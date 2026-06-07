@@ -1,6 +1,6 @@
 # 🌱 LifeCraft AI
 
-## Transforming Personal & Professional Growth Through AI
+## Transforming Personal & Professional Growth Through AI 
 
 LifeCraft AI is an intelligent platform designed to support **holistic growth** by combining **career development, mental wellness, productivity, and sustainable lifestyle awareness** into a single guided ecosystem.
 
@@ -8,7 +8,7 @@ Unlike traditional platforms that focus on only one aspect of self-improvement, 
 
 ---
 
-## 🚀 Problem Statement
+### 🚀 Problem Statement
 
 Students and early professionals often face multiple challenges:
 
